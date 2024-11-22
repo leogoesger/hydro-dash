@@ -74,7 +74,10 @@ export const UsgsPlot: FC<IProps> = ({ gauge }) => {
 
   return (
     <>
-      <Accordion defaultExpanded style={{ margin: 0 }}>
+      <Accordion
+        defaultExpanded={window.innerWidth > 900}
+        style={{ margin: 0 }}
+      >
         <AccordionSummary
           expandIcon={<ExpandMore />}
           aria-controls="panel1-content"
@@ -100,9 +103,9 @@ export const UsgsPlot: FC<IProps> = ({ gauge }) => {
               font: { color: "grey" },
               paper_bgcolor: "#283439",
               plot_bgcolor: "#283439",
-              yaxis: { title: "Flow (cfs)", gridcolor: "grey" },
+              yaxis: { gridcolor: "grey", position: 0 },
               showlegend: false,
-              margin: { t: 25, r: 25, l: 65, b: 35 },
+              margin: { t: 25, r: 15, l: 40, b: 35 },
               width: 300,
               height: 250,
               xaxis: {
