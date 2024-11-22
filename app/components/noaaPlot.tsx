@@ -53,14 +53,11 @@ export const NoaaPlot: FC<IProps> = ({ gauge }) => {
         if (validForcast.length === 0) {
           return;
         }
-        let correctionPerc = 1;
         const lastObservedY = observedLocal[observedLocal.length - 1].secondary;
-        if (validForcast[0].secondary < lastObservedY) {
-          correctionPerc =
-            (lastObservedY - validForcast[0].secondary) /
-              validForcast[0].secondary +
-            1;
-        }
+        const correctionPerc =
+          (lastObservedY - validForcast[0].secondary) /
+            validForcast[0].secondary +
+          1;
         setforcastedX(validForcast.map((item) => item.validTime));
         setForcastedY(
           validForcast.map((item) => item.secondary * 1000 * correctionPerc)

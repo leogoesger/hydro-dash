@@ -66,7 +66,6 @@ export const UsgsPlot: FC<IProps> = ({ gauge }) => {
               });
             });
           });
-        console.log(x, y);
         setObservedX(x);
         setObservedY(y);
       });
