@@ -29,6 +29,8 @@ interface IProps {
 }
 
 export const NoaaPlot: FC<IProps> = ({ gauge }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [observedX, setObservedX] = useState<string[]>([]);
   const [observedY, setObservedY] = useState<number[]>([]);
   const [forcastedX, setforcastedX] = useState<string[]>([]);
@@ -51,6 +53,7 @@ export const NoaaPlot: FC<IProps> = ({ gauge }) => {
 
         // If the forcast is lower than the observed, we calculate the percentage difference, and allow to each one of the forcasted values.
         if (validForcast.length === 0) {
+          setIsLoading(false);
           return;
         }
         const lastObservedY = observedLocal[observedLocal.length - 1].secondary;
@@ -62,6 +65,11 @@ export const NoaaPlot: FC<IProps> = ({ gauge }) => {
         setForcastedY(
           validForcast.map((item) => item.secondary * 1000 * correctionPerc)
         );
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
+        setIsError(true);
       });
   }, [gauge.number]);
 
@@ -76,13 +84,19 @@ export const NoaaPlot: FC<IProps> = ({ gauge }) => {
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          {getEmoji(
-            observedY[observedY.length - 1],
-            forcastedY,
-            gauge.min,
-            gauge.max
-          )}{" "}
-          {gauge.name}
+          {isLoading
+            ? "❓"
+            : getEmoji(
+                observedY[observedY.length - 1],
+                forcastedY,
+                gauge.min,
+                gauge.max
+              )}{" "}
+          {isError
+            ? "Cannot load gauge"
+            : isLoading
+            ? "Loading ..."
+            : gauge.name}
         </AccordionSummary>
         <AccordionDetails>
           <Plot

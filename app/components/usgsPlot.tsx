@@ -45,6 +45,8 @@ interface IProps {
 }
 
 export const UsgsPlot: FC<IProps> = ({ gauge }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [observedX, setObservedX] = useState<string[]>([]);
   const [observedY, setObservedY] = useState<number[]>([]);
 
@@ -68,6 +70,11 @@ export const UsgsPlot: FC<IProps> = ({ gauge }) => {
           });
         setObservedX(x);
         setObservedY(y);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
+        setIsError(true);
       });
   }, [gauge.number]);
 
@@ -82,8 +89,19 @@ export const UsgsPlot: FC<IProps> = ({ gauge }) => {
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          {getEmoji(observedY[observedY.length - 1], [], gauge.min, gauge.max)}{" "}
-          {gauge.name}
+          {isLoading
+            ? "❓"
+            : getEmoji(
+                observedY[observedY.length - 1],
+                [],
+                gauge.min,
+                gauge.max
+              )}{" "}
+          {isError
+            ? "Cannot load gauge"
+            : isLoading
+            ? "Loading ..."
+            : gauge.name}
         </AccordionSummary>
         <AccordionDetails>
           <Plot
