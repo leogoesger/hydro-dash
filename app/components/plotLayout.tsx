@@ -120,7 +120,7 @@ const gauges: RiverInfo[] = [
       "https://waterdata.usgs.gov/monitoring-location/11522500/#parameterCode=00065&period=P7D&showMedian=false",
   },
   {
-    number: "BURC1",
+    number: "11527000",
     name: "Trinity",
     description: "",
     min: 500,
@@ -129,6 +129,7 @@ const gauges: RiverInfo[] = [
       "https://www.americanwhitewater.org/content/River/view/river-detail/316/main",
     usgsLink:
       "https://waterdata.usgs.gov/monitoring-location/11527000/#parameterCode=00065&period=P7D&showMedian=false",
+    isUsgs: true,
   },
 ];
 
