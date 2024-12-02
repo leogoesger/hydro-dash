@@ -108,6 +108,28 @@ const gauges: RiverInfo[] = [
       "https://waterdata.usgs.gov/monitoring-location/11355010/#parameterCode=00060&period=P7D&showMedian=false",
     isUsgs: true,
   },
+  {
+    number: "SBRC1",
+    name: "SALMON",
+    description: "",
+    min: 1200,
+    max: 4500,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/11391/main",
+    usgsLink:
+      "https://waterdata.usgs.gov/monitoring-location/11522500/#parameterCode=00065&period=P7D&showMedian=false",
+  },
+  {
+    number: "BURC1",
+    name: "Trinity",
+    description: "",
+    min: 500,
+    max: 40000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/316/main",
+    usgsLink:
+      "https://waterdata.usgs.gov/monitoring-location/11527000/#parameterCode=00065&period=P7D&showMedian=false",
+  },
 ];
 
 export const PlotLayout = () => {
