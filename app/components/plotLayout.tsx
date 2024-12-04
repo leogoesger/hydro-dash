@@ -110,7 +110,7 @@ const gauges: RiverInfo[] = [
   },
   {
     number: "SBRC1",
-    name: "SALMON",
+    name: "Cal Salmon",
     description: "",
     min: 1200,
     max: 4500,
