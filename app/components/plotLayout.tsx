@@ -75,6 +75,16 @@ const gauges: RiverInfo[] = [
     usgsLink: "https://waterdata.usgs.gov/ca/nwis/inventory/?site_no=11417500",
   },
   {
+    number: "GYRC1",
+    name: "N. Yuba - Goodyears Bar",
+    description: "",
+    min: 800,
+    max: 5000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/340/main",
+    usgsLink: "https://waterdata.usgs.gov/monitoring-location/11413000",
+  },
+  {
     number: "SEIC1",
     name: "Klamath - Happy Camp",
     description: "",
