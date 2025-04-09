@@ -126,7 +126,8 @@ export const UsgsPlot: FC<IProps> = ({ gauge }) => {
               width: 300,
               height: 250,
               xaxis: {
-                tickformat: "%m-%d %H:%M",
+                tickformat: "%m-%d",
+                hoverformat: "%m-%d %H:%M",
               },
             }}
           />

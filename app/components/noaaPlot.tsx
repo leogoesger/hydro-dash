@@ -146,8 +146,8 @@ export const NoaaPlot: FC<IProps> = ({ gauge }) => {
               width: 300,
               height: 250,
               xaxis: {
-                // tickformat include hr
-                tickformat: "%m-%d %H:%M",
+                tickformat: "%m-%d",
+                hoverformat: "%m-%d %H:%M",
               },
             }}
           />
