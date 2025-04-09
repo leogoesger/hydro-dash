@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Yakkkkkk",
+  title: "Yakkkkk",
   description: "River flow data for kayaking!",
 };
 

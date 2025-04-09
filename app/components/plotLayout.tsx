@@ -65,6 +65,16 @@ const gauges: RiverInfo[] = [
       "https://waterdata.usgs.gov/monitoring-location/11427000/#parameterCode=00060&period=P7D&showMedian=true",
   },
   {
+    number: "cbac1",
+    name: "S. American",
+    description: "",
+    min: 800,
+    max: 20000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/148/main",
+    usgsLink: "https://water.noaa.gov/gauges/cbac1",
+  },
+  {
     number: "JNSC1",
     name: "S. Yuba - E to P",
     description: "",
