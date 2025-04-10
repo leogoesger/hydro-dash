@@ -44,7 +44,11 @@ export const NoaaPlot: FC<IProps> = ({ gauge }) => {
         const observedLocal = d.observed.data.filter((item) => {
           return moment(item.validTime).isAfter(moment().subtract(4, "days"));
         });
-        setObservedX(observedLocal.map((item) => item.validTime));
+        setObservedX(
+          observedLocal.map((item) =>
+            moment(item.validTime).local().format("YYYY-MM-DD HH:mm:ss")
+          )
+        );
         setObservedY(observedLocal.map((item) => item.secondary * 1000));
 
         const validForcast = d.forecast.data.filter((item) =>
