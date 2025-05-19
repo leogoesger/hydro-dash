@@ -6,16 +6,16 @@ import {
   FormControlLabel,
   Switch,
 } from "@mui/material";
-import { RiverInfo } from "./plotLayout";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { yellow } from "@mui/material/colors";
+import { RiverInfo } from "../gauges";
 
 interface IProps {
   gauges: RiverInfo[];
-  setGauge: (gaugeIdx: number) => void;
+  toggleGauge: (gaugeIdx: number) => void;
 }
 
-export const Settings: FC<IProps> = ({ gauges, setGauge }) => {
+export const Settings: FC<IProps> = ({ gauges, toggleGauge }) => {
   const [open, toggleDrawer] = useState(false);
   return (
     <>
@@ -37,7 +37,10 @@ export const Settings: FC<IProps> = ({ gauges, setGauge }) => {
               <FormControlLabel
                 key={g.number}
                 control={
-                  <Switch checked={g.display} onChange={() => setGauge(idx)} />
+                  <Switch
+                    checked={g.display}
+                    onChange={() => toggleGauge(idx)}
+                  />
                 }
                 label={g.name}
               />

@@ -1,6 +1,6 @@
 import { useState, useEffect, FC } from "react";
 import Plot from "react-plotly.js";
-import { getEmoji, RiverInfo } from "./plotLayout";
+import { getEmoji } from "./plotLayout";
 import {
   Accordion,
   AccordionActions,
@@ -8,7 +8,8 @@ import {
   AccordionDetails,
   Button,
 } from "@mui/material";
-import { ExpandMore } from "@mui/icons-material";
+import { ExpandMore, VisibilityOff } from "@mui/icons-material";
+import { RiverInfo } from "../gauges";
 
 export interface UsgsResponse {
   value: Value;
@@ -42,9 +43,10 @@ interface Value3 {
 
 interface IProps {
   gauge: RiverInfo;
+  toggleGauge: () => void;
 }
 
-export const UsgsPlot: FC<IProps> = ({ gauge }) => {
+export const UsgsPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [observedX, setObservedX] = useState<string[]>([]);
@@ -133,12 +135,21 @@ export const UsgsPlot: FC<IProps> = ({ gauge }) => {
           />
         </AccordionDetails>
         <AccordionActions>
-          <Button onClick={() => window.open(gauge.usgsLink, "_blank")}>
-            USGS
-          </Button>
-          <Button onClick={() => window.open(gauge.awLink, "_blank")}>
-            AW
-          </Button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Button onClick={toggleGauge} color="secondary">
+              <VisibilityOff />
+            </Button>
+
+            <Button onClick={() => window.open(gauge.awLink, "_blank")}>
+              <b>AW</b>
+            </Button>
+          </div>
         </AccordionActions>
       </Accordion>
     </>

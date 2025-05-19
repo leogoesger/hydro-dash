@@ -1,7 +1,7 @@
 import { useState, useEffect, FC } from "react";
 import Plot from "react-plotly.js";
 import moment from "moment";
-import { getEmoji, RiverInfo } from "./plotLayout";
+import { getEmoji } from "./plotLayout";
 import {
   Accordion,
   AccordionActions,
@@ -9,7 +9,8 @@ import {
   AccordionDetails,
   Button,
 } from "@mui/material";
-import { ExpandMore } from "@mui/icons-material";
+import { ExpandMore, VisibilityOff } from "@mui/icons-material";
+import { RiverInfo } from "../gauges";
 
 interface NoaaData {
   validTime: string;
@@ -26,9 +27,10 @@ export interface NoaaPrediction {
 
 interface IProps {
   gauge: RiverInfo;
+  toggleGauge: () => void;
 }
 
-export const NoaaPlot: FC<IProps> = ({ gauge }) => {
+export const NoaaPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [observedX, setObservedX] = useState<string[]>([]);
@@ -157,12 +159,21 @@ export const NoaaPlot: FC<IProps> = ({ gauge }) => {
           />
         </AccordionDetails>
         <AccordionActions>
-          <Button onClick={() => window.open(gauge.usgsLink, "_blank")}>
-            USGS
-          </Button>
-          <Button onClick={() => window.open(gauge.awLink, "_blank")}>
-            AW
-          </Button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Button onClick={toggleGauge} color="secondary">
+              <VisibilityOff />
+            </Button>
+
+            <Button onClick={() => window.open(gauge.awLink, "_blank")}>
+              <b>AW</b>
+            </Button>
+          </div>
         </AccordionActions>
       </Accordion>
     </>
