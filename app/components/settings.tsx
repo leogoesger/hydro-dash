@@ -48,7 +48,7 @@ export const Settings: FC<IProps> = ({ gauges, toggleGauge }) => {
           })}
           <Button
             onClick={() => toggleDrawer(false)}
-            style={{ marginTop: "1rem" }}
+            style={{ marginTop: "1rem", zIndex: 100 }}
           >
             Close
           </Button>
