@@ -23,3 +23,12 @@ body {
 .plot-container {
   background-color: 'red';
 }
+
+.mapboxgl-popup-content {
+  color: black
+}
+
+.mapboxgl-popup-content {
+  overflow: scroll;
+  height: 300px;
+}

@@ -43,7 +43,7 @@ interface Value3 {
 
 interface IProps {
   gauge: RiverInfo;
-  toggleGauge: () => void;
+  toggleGauge?: () => void;
 }
 
 export const UsgsPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
@@ -78,8 +78,11 @@ export const UsgsPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
         setIsLoading(false);
         setIsError(true);
       });
-  }, [gauge.number]);
+  }, [gauge?.number]);
 
+  if (gauge == null) {
+    return <div>Gauge not found</div>;
+  }
   return (
     <>
       <Accordion
@@ -142,9 +145,11 @@ export const UsgsPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
               width: "100%",
             }}
           >
-            <Button onClick={toggleGauge} color="secondary">
-              <VisibilityOff />
-            </Button>
+            {toggleGauge != null && (
+              <Button onClick={toggleGauge} color="secondary">
+                <VisibilityOff />
+              </Button>
+            )}
 
             <Button onClick={() => window.open(gauge.awLink, "_blank")}>
               <b>AW</b>

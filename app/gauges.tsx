@@ -146,7 +146,6 @@ export const defaultGauges: RiverInfo[] = [
     max: 25000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/570/main",
-
     display: true,
   },
   {

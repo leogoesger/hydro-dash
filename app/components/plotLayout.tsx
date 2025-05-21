@@ -4,11 +4,11 @@ import { Settings } from "./settings";
 import { RiverInfo, defaultGauges } from "../gauges";
 import { Snackbar, Alert } from "@mui/material";
 
-const NoaaPlot = dynamic(() => import("./noaaPlot"), {
+export const NoaaPlot = dynamic(() => import("./noaaPlot"), {
   ssr: false,
 });
 
-const UsgsPlot = dynamic(() => import("./usgsPlot"), {
+export const UsgsPlot = dynamic(() => import("./usgsPlot"), {
   ssr: false,
 });
 

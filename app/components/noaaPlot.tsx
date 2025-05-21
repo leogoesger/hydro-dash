@@ -27,7 +27,7 @@ export interface NoaaPrediction {
 
 interface IProps {
   gauge: RiverInfo;
-  toggleGauge: () => void;
+  toggleGauge?: () => void;
 }
 
 export const NoaaPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
@@ -166,9 +166,11 @@ export const NoaaPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
               width: "100%",
             }}
           >
-            <Button onClick={toggleGauge} color="secondary">
-              <VisibilityOff />
-            </Button>
+            {toggleGauge != null && (
+              <Button onClick={toggleGauge} color="secondary">
+                <VisibilityOff />
+              </Button>
+            )}
 
             <Button onClick={() => window.open(gauge.awLink, "_blank")}>
               <b>AW</b>
