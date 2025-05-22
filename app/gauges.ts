@@ -185,12 +185,12 @@ export const defaultGauges: RiverInfo[] = [
 
 export const fetchLatestReading = async (gauge: RiverInfo) => {
   if (gauge.isUsgs) {
-    const response = await fetch(
-      `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${gauge.number}&siteStatus=all&period=PT2H`
-    );
-    const data = await response.json() as UsgsResponse;
-    const filtered = data.value.timeSeries
-      .filter(({ variable }) => variable.unit.unitCode === "ft3/s")
+    // const response = await fetch(
+    //   `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${gauge.number}&siteStatus=all&period=PT2H`
+    // );
+    // const data = await response.json() as UsgsResponse;
+    // const filtered = data.value.timeSeries
+    //   .filter(({ variable }) => variable.unit.unitCode === "ft3/s")
     return 0
   }
   const response = await fetch(`https://api.water.noaa.gov/nwps/v1/gauges/${gauge.number}/stageflow`)
