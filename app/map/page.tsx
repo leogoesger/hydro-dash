@@ -4,7 +4,7 @@
 import { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { Drawer, Typography } from "@mui/material";
+import { Drawer, Typography, Button } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { rivers } from "./rivers";
@@ -17,7 +17,8 @@ const darkTheme = createTheme({
   },
 });
 
-const lineData = require("./lines.json");
+const lineDataIV = require("./lines_IV.json");
+const lineDataIII = require("./lines_III.json");
 const pointData = require("./points.json");
 
 mapboxgl.accessToken =
@@ -52,20 +53,38 @@ const MapPage = () => {
     );
 
     map.on("load", () => {
-      map.addSource("lines", {
+      map.addSource("linesIV", {
         type: "geojson",
-        data: lineData,
+        data: lineDataIV,
       });
       map.addLayer({
-        id: "lines",
+        id: "linesIV",
         type: "line",
-        source: "lines",
+        source: "linesIV",
         layout: {
           "line-join": "round",
           "line-cap": "round",
         },
         paint: {
           "line-color": "#000",
+          "line-width": 4,
+        },
+      });
+
+      map.addSource("linesIII", {
+        type: "geojson",
+        data: lineDataIII,
+      });
+      map.addLayer({
+        id: "linesIII",
+        type: "line",
+        source: "linesIII",
+        layout: {
+          "line-join": "round",
+          "line-cap": "round",
+        },
+        paint: {
+          "line-color": "blue",
           "line-width": 4,
         },
       });
@@ -128,14 +147,14 @@ const MapPage = () => {
       }
     });
 
-    map.on("click", "lines", (e) => {
+    map.on("click", ["linesIV", "linesIII"], (e) => {
       if (e.features !== undefined) {
         const title = e.features[0].properties?.title as string;
         setRiverData(rivers[title]);
       }
     });
 
-    map.on("mouseenter", "lines", (e) => {
+    map.on("mouseenter", ["linesIV", "linesIII"], (e) => {
       map.getCanvas().style.cursor = "pointer";
       if (e.features !== undefined) {
         console.log(e.features[0]?.properties?.title);
@@ -149,7 +168,7 @@ const MapPage = () => {
       }
     });
 
-    map.on("mouseleave", "lines", () => {
+    map.on("mouseleave", ["linesIV", "linesIII"], () => {
       map.getCanvas().style.cursor = "grab";
     });
     map.on("mouseleave", "points", () => {
@@ -167,13 +186,33 @@ const MapPage = () => {
       >
         <div style={{ padding: "1rem" }}>
           <Typography variant="h6">{riverData?.name}</Typography>
-          {riverData &&
-            (riverData.isUsgs ? (
-              <UsgsPlot key={riverData.number} gauge={riverData} />
-            ) : (
-              <NoaaPlot key={riverData.number} gauge={riverData} />
-            ))}
+          <div
+            dangerouslySetInnerHTML={{
+              __html: riverData?.description as string,
+            }}
+            style={{ maxWidth: "300px" }}
+          />
+
+          <div style={{ marginTop: "1rem" }}>
+            {riverData &&
+              (riverData.isUsgs ? (
+                <UsgsPlot key={riverData.number} gauge={riverData} />
+              ) : (
+                <NoaaPlot key={riverData.number} gauge={riverData} />
+              ))}
+          </div>
         </div>
+        <Button
+          onClick={() => setRiverData(null)}
+          style={{
+            marginTop: "1rem",
+            zIndex: 100,
+            width: "90%",
+            margin: "0 auto",
+          }}
+        >
+          Close
+        </Button>
       </Drawer>
 
       <div

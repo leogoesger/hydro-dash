@@ -30,5 +30,5 @@ body {
 
 .mapboxgl-popup-content {
   overflow: scroll;
-  height: 300px;
+  max-height: 300px;
 }
