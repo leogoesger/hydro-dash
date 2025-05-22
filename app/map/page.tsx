@@ -67,7 +67,7 @@ const MapPage = () => {
         },
         paint: {
           "line-color": "#000",
-          "line-width": 4,
+          "line-width": 5,
         },
       });
 
@@ -85,7 +85,7 @@ const MapPage = () => {
         },
         paint: {
           "line-color": "blue",
-          "line-width": 4,
+          "line-width": 5,
         },
       });
 

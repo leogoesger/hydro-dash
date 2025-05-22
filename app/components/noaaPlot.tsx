@@ -82,7 +82,7 @@ export const NoaaPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
   return (
     <>
       <Accordion
-        defaultExpanded={window.innerWidth > 900}
+        defaultExpanded={window.innerWidth > 900 || toggleGauge == null}
         style={{ margin: 0 }}
       >
         <AccordionSummary
