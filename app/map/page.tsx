@@ -120,58 +120,46 @@ const MapPage = () => {
       });
     });
 
-    map.on("click", "points", (e) => {
+    map.on("click", ["linesIV", "linesIII", "points"], (e) => {
       if (e.features !== undefined) {
-        // Copy coordinates array.
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const coordinates = (e.features[0].geometry as any).coordinates.slice();
-        const description = e.features[0].properties?.description;
+        const pointsFeatures = e.features.filter(
+          (feature) => feature?.source === "points"
+        );
+        if (pointsFeatures.length > 0) {
+          const coordinates =
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (pointsFeatures[0].geometry as any).coordinates.slice();
+          const description = pointsFeatures[0].properties?.description;
 
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        if (
-          ["mercator", "equirectangular"].includes(map.getProjection().name)
-        ) {
-          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          // Ensure that if the map is zoomed out such that multiple
+          // copies of the feature are visible, the popup appears
+          // over the copy being pointed to.
+          if (
+            ["mercator", "equirectangular"].includes(map.getProjection().name)
+          ) {
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
           }
+
+          if (description !== undefined) {
+            new mapboxgl.Popup()
+              .setLngLat(coordinates)
+              .setHTML(description)
+              .addTo(map);
+          }
+        } else {
+          const title = e.features[0].properties?.title as string;
+          setRiverData(rivers[title]);
         }
-
-        if (description !== undefined) {
-          new mapboxgl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(description)
-            .addTo(map);
-        }
       }
     });
 
-    map.on("click", ["linesIV", "linesIII"], (e) => {
-      if (e.features !== undefined) {
-        const title = e.features[0].properties?.title as string;
-        setRiverData(rivers[title]);
-      }
-    });
-
-    map.on("mouseenter", ["linesIV", "linesIII"], (e) => {
+    map.on("mouseenter", ["linesIV", "linesIII", "points"], () => {
       map.getCanvas().style.cursor = "pointer";
-      if (e.features !== undefined) {
-        console.log(e.features[0]?.properties?.title);
-      }
     });
 
-    map.on("mouseenter", "points", (e) => {
-      map.getCanvas().style.cursor = "pointer";
-      if (e.features !== undefined) {
-        console.log(e.features[0]?.properties?.title);
-      }
-    });
-
-    map.on("mouseleave", ["linesIV", "linesIII"], () => {
-      map.getCanvas().style.cursor = "grab";
-    });
-    map.on("mouseleave", "points", () => {
+    map.on("mouseleave", ["linesIV", "linesIII", "points"], () => {
       map.getCanvas().style.cursor = "grab";
     });
   }, []);
