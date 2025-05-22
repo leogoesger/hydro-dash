@@ -2,14 +2,33 @@
 "use client"; // 👈 use it here
 
 import { useRef, useEffect, useState } from "react";
-import mapboxgl from "mapbox-gl";
+import mapboxgl, { GeoJSONFeature } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { Drawer, Typography, Button } from "@mui/material";
+import { Drawer, Typography, Button, Snackbar, Alert } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { GetGaugeMappedByName } from "./rivers";
-import { RiverInfo } from "../gauges";
+import { fetchLatestReading, RiverInfo } from "../gauges";
 import { UsgsPlot, NoaaPlot } from "../components/plotLayout";
+
+const getUniqueFeatures = (
+  features: GeoJSONFeature[],
+  comparatorProperty: string
+) => {
+  const uniqueIds = new Set();
+  const uniqueFeatures = [];
+  for (const feature of features) {
+    if (feature.properties === null) {
+      continue;
+    }
+    const id = feature.properties[comparatorProperty];
+    if (!uniqueIds.has(id)) {
+      uniqueIds.add(id);
+      uniqueFeatures.push(feature);
+    }
+  }
+  return uniqueFeatures;
+};
 
 const darkTheme = createTheme({
   palette: {
@@ -29,13 +48,17 @@ const MapPage = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
 
   const [riverData, setRiverData] = useState<RiverInfo | null>(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [cfs, setCfs] = useState<number | null>(null);
 
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current as HTMLDivElement,
       center: [-115.38, 46.27],
       style: "mapbox://styles/mapbox/standard",
-      zoom: 9,
+      zoom: 10,
+      maxZoom: 15,
+      minZoom: 5,
     });
     const riverGauges = GetGaugeMappedByName();
 
@@ -182,11 +205,43 @@ const MapPage = () => {
     map.on("mouseleave", ["linesV", "linesIV", "linesIII", "points"], () => {
       map.getCanvas().style.cursor = "grab";
     });
+
+    map.on("zoomend", (e) => {
+      if (e.target.getZoom() > 10) {
+        const features = map.queryRenderedFeatures({
+          layers: ["linesV", "linesIV", "linesIII"],
+        });
+        const uniqueFeatures = getUniqueFeatures(features, "name");
+        if (uniqueFeatures.length == 1) {
+          const title = uniqueFeatures[0].properties?.title as string;
+          const gauge = riverGauges.get(title) as RiverInfo;
+          fetchLatestReading(gauge).then((cfsData) => {
+            setCfs(cfsData);
+            setSnackbarOpen(true);
+          });
+        }
+      }
+    });
   }, []);
 
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={snackbarOpen}
+        onClose={() => setSnackbarOpen(false)}
+        autoHideDuration={2000}
+        style={{ width: "350px" }}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity="info"
+          sx={{ width: "65%" }}
+        >
+          {cfs} cfs
+        </Alert>
+      </Snackbar>
       <Drawer
         open={riverData !== null}
         onClose={() => setRiverData(null)}
