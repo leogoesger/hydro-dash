@@ -7,7 +7,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { Drawer, Typography, Button } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { rivers } from "./rivers";
+import { GetGaugeMappedByName } from "./rivers";
 import { RiverInfo } from "../gauges";
 import { UsgsPlot, NoaaPlot } from "../components/plotLayout";
 
@@ -17,6 +17,7 @@ const darkTheme = createTheme({
   },
 });
 
+const lineDataV = require("./lines_V.json");
 const lineDataIV = require("./lines_IV.json");
 const lineDataIII = require("./lines_III.json");
 const pointData = require("./points.json");
@@ -36,6 +37,7 @@ const MapPage = () => {
       style: "mapbox://styles/mapbox/standard",
       zoom: 9,
     });
+    const riverGauges = GetGaugeMappedByName();
 
     // Add navigation control (the +/- zoom buttons)
     map.addControl(new mapboxgl.NavigationControl(), "top-right");
@@ -53,6 +55,24 @@ const MapPage = () => {
     );
 
     map.on("load", () => {
+      map.addSource("linesV", {
+        type: "geojson",
+        data: lineDataV,
+      });
+      map.addLayer({
+        id: "linesV",
+        type: "line",
+        source: "linesV",
+        layout: {
+          "line-join": "round",
+          "line-cap": "round",
+        },
+        paint: {
+          "line-color": "red",
+          "line-width": 5,
+        },
+      });
+
       map.addSource("linesIV", {
         type: "geojson",
         data: lineDataIV,
@@ -120,7 +140,7 @@ const MapPage = () => {
       });
     });
 
-    map.on("click", ["linesIV", "linesIII", "points"], (e) => {
+    map.on("click", ["linesV", "linesIV", "linesIII", "points"], (e) => {
       if (e.features !== undefined) {
         const pointsFeatures = e.features.filter(
           (feature) => feature?.source === "points"
@@ -150,16 +170,16 @@ const MapPage = () => {
           }
         } else {
           const title = e.features[0].properties?.title as string;
-          setRiverData(rivers[title]);
+          setRiverData(riverGauges.get(title) ?? null);
         }
       }
     });
 
-    map.on("mouseenter", ["linesIV", "linesIII", "points"], () => {
+    map.on("mouseenter", ["linesV", "linesIV", "linesIII", "points"], () => {
       map.getCanvas().style.cursor = "pointer";
     });
 
-    map.on("mouseleave", ["linesIV", "linesIII", "points"], () => {
+    map.on("mouseleave", ["linesV", "linesIV", "linesIII", "points"], () => {
       map.getCanvas().style.cursor = "grab";
     });
   }, []);

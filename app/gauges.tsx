@@ -18,7 +18,6 @@ export const defaultGauges: RiverInfo[] = [
     max: 2000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/196/main",
-
     display: true,
   },
   {
@@ -140,8 +139,8 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "loci1",
-    name: "Lochsa",
-    description: "",
+    name: "Lochsa - Fish Creek to Split Creek",
+    description: "Length: 12 miles.",
     min: 1200,
     max: 25000,
     awLink:
@@ -151,11 +150,32 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "13247500",
     name: "Payette - Upper Main",
-    description: "",
+    description: "Length: 7 miles.",
     min: 800,
     max: 12000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/4360/main",
+    display: true,
+  },
+  {
+    number: "13247500",
+    name: "S. Payette - Staircase",
+    description:
+      "<b>Gauge is for Upper Main Payette, not Staircase. Estimation can by done by subtracting the NF Payette at Banks from the Main Fork at Horseshoe Bend.</b> <br>Length: 5 miles.",
+    min: 800,
+    max: 12000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/4360/main",
+    display: false,
+  },
+  {
+    number: "13246000",
+    name: "N. Payette - The North Fork",
+    description: "Length: 16 miles.",
+    min: 400,
+    max: 3000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/592/main",
     display: true,
   },
 ];
