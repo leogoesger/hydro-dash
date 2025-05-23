@@ -1,5 +1,4 @@
 import { NoaaPrediction } from "./components/noaaPlot";
-import { UsgsResponse } from "./components/usgsPlot";
 
 export interface RiverInfo {
   number: string;
