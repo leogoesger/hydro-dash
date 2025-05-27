@@ -231,7 +231,7 @@ export const fetchLatestReading = async (gauge: RiverInfo) => {
     if (hrsSince > 6) {
       return ":( stale data";
     }
-    return (d?.value || "0 cfs");
+    return (d?.value + " cfs" || "0 cfs");
   }
   const response = await fetch(`https://api.water.noaa.gov/nwps/v1/gauges/${gauge.number}/stageflow`)
   const data = await response.json() as NoaaPrediction;
