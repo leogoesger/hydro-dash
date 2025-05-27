@@ -23,6 +23,26 @@ export const defaultGauges: RiverInfo[] = [
     display: true,
   },
   {
+    number: "NFEC1",
+    name: "N. Feather - Tobin",
+    description: "",
+    min: 400,
+    max: 2000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/196/main",
+    display: false,
+  },
+  {
+    number: "NFEC1",
+    name: "N. Feather - Lobin",
+    description: "",
+    min: 400,
+    max: 2000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/196/main",
+    display: false,
+  },
+  {
     number: "TRRN2",
     name: "Truckee - Reno",
     description: "",
@@ -118,14 +138,23 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "SBRC1",
-    name: "Cal Salmon",
+    name: "Salmon - Butler",
     description: "",
     min: 1200,
     max: 4500,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/11391/main",
-
     display: true,
+  },
+  {
+    number: "SBRC1",
+    name: "Salmon - Nordheimer",
+    description: "",
+    min: 1200,
+    max: 4500,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/279/main",
+    display: false,
   },
   {
     number: "11527000",
