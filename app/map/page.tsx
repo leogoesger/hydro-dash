@@ -2,14 +2,13 @@
 "use client"; // 👈 use it here
 
 import { useRef, useEffect, useState } from "react";
-import mapboxgl, { GeoJSONFeature } from "mapbox-gl";
+import mapboxgl, { GeoJSONFeature, Map } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { Drawer, Typography, Button, Snackbar, Alert } from "@mui/material";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 import { GetGaugeMappedByName } from "./rivers";
 import { fetchLatestReading, RiverInfo } from "../gauges";
 import { UsgsPlot, NoaaPlot } from "../components/plotLayout";
+import { LayerToggle } from "./layerToggle";
 
 const getUniqueFeatures = (
   features: GeoJSONFeature[],
@@ -30,12 +29,6 @@ const getUniqueFeatures = (
   return uniqueFeatures;
 };
 
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
-
 const lineDataV = require("./lines_V.json");
 const lineDataIV = require("./lines_IV.json");
 const lineDataIII = require("./lines_III.json");
@@ -45,23 +38,41 @@ mapboxgl.accessToken =
   "pk.eyJ1IjoibGVvZ29lc2dlciIsImEiOiJjamU3dDEwZDkwNmJ5MnhwaHM1MjlydG8xIn0.UcVFjCvl3PTPI8jiOnPbYA";
 
 const MapPage = () => {
+  const mapRef = useRef<Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
 
   const [riverData, setRiverData] = useState<RiverInfo | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [cfs, setCfs] = useState<number | null>(null);
+  const [style, setStyle] = useState("mapbox://styles/mapbox/standard");
+
+  const toggleStyle = () => {
+    const newStyle =
+      style === "mapbox://styles/mapbox/standard"
+        ? "mapbox://styles/mapbox/standard-satellite"
+        : "mapbox://styles/mapbox/standard";
+    setStyle(newStyle);
+    if (mapRef.current) {
+      mapRef.current.setStyle(newStyle);
+    }
+  };
 
   useEffect(() => {
-    const map = new mapboxgl.Map({
+    if (mapRef.current) return;
+    mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current as HTMLDivElement,
       center: [-115.38, 46.27],
       style: "mapbox://styles/mapbox/standard",
-      zoom: 10,
-      maxZoom: 15,
+      zoom: 5,
+      maxZoom: 20,
       minZoom: 5,
     });
     const riverGauges = GetGaugeMappedByName();
 
+    if (mapRef.current === null) {
+      return;
+    }
+    const map = mapRef.current;
     // Add navigation control (the +/- zoom buttons)
     map.addControl(new mapboxgl.NavigationControl(), "top-right");
 
@@ -77,7 +88,7 @@ const MapPage = () => {
       })
     );
 
-    map.on("load", () => {
+    map.on("style.load", () => {
       map.addSource("linesV", {
         type: "geojson",
         data: lineDataV,
@@ -225,8 +236,11 @@ const MapPage = () => {
   }, []);
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
+    <>
+      <LayerToggle
+        checked={style !== "mapbox://styles/mapbox/standard"}
+        toggleStyle={toggleStyle}
+      />
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={snackbarOpen}
@@ -287,7 +301,7 @@ const MapPage = () => {
         }}
         ref={mapContainerRef}
       />
-    </ThemeProvider>
+    </>
   );
 };
 export default MapPage;
