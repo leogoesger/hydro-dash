@@ -69,7 +69,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "NFDC1",
     name: "N. American - Chamberlain",
-    description: "",
+    description: "Length: 4.8 miles.",
     min: 300,
     max: 10000,
     awLink:
@@ -207,6 +207,16 @@ export const defaultGauges: RiverInfo[] = [
     description: "Length: 16 miles.",
     min: 400,
     max: 3000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/592/main",
+    display: true,
+  },
+  {
+    number: "14123500",
+    name: "White Salmon",
+    description: "Length: 4.5 miles.",
+    min: 450,
+    max: 2500,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/592/main",
     display: true,

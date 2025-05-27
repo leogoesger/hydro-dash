@@ -268,7 +268,7 @@ const MapPage = () => {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={snackbarOpen}
         onClose={() => setSnackbarOpen(false)}
-        autoHideDuration={2000}
+        autoHideDuration={5000}
         style={{ width: "350px" }}
       >
         <Alert
