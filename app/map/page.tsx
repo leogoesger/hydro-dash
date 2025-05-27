@@ -33,6 +33,7 @@ const lineDataV = require("./lines_V.json");
 const lineDataIV = require("./lines_IV.json");
 const lineDataIII = require("./lines_III.json");
 const pointData = require("./points.json");
+const putinData = require("./putin.json");
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibGVvZ29lc2dlciIsImEiOiJjamU3dDEwZDkwNmJ5MnhwaHM1MjlydG8xIn0.UcVFjCvl3PTPI8jiOnPbYA";
@@ -43,7 +44,7 @@ const MapPage = () => {
 
   const [riverData, setRiverData] = useState<RiverInfo | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [cfs, setCfs] = useState<number | null>(null);
+  const [cfs, setCfs] = useState<string>("");
   const [style, setStyle] = useState("mapbox://styles/mapbox/standard");
 
   const toggleStyle = () => {
@@ -172,6 +173,22 @@ const MapPage = () => {
           },
         });
       });
+
+      map.addSource("pointsPutin", {
+        type: "geojson",
+        data: putinData,
+        cluster: false,
+        minzoom: 9,
+      });
+      map.addLayer({
+        id: "putin",
+        type: "circle",
+        source: "pointsPutin",
+        paint: {
+          "circle-color": "#00cc00",
+          "circle-radius": 6,
+        },
+      });
     });
 
     map.on("click", ["linesV", "linesIV", "linesIII", "points"], (e) => {
@@ -253,7 +270,7 @@ const MapPage = () => {
           severity="info"
           sx={{ width: "65%" }}
         >
-          {cfs} cfs
+          {cfs}
         </Alert>
       </Snackbar>
       <Drawer

@@ -1,4 +1,6 @@
+import moment from "moment";
 import { NoaaPrediction } from "./components/noaaPlot";
+import { UsgsResponse } from "./components/usgsPlot";
 
 export interface RiverInfo {
   number: string;
@@ -15,7 +17,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "NFEC1",
     name: "N. Feather - Rock Creek",
-    description: "",
+    description: "Length: 3.8 miles.",
     min: 400,
     max: 2000,
     awLink:
@@ -25,7 +27,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "NFEC1",
     name: "N. Feather - Tobin",
-    description: "",
+    description: "Length: 1.3 miles.",
     min: 400,
     max: 2000,
     awLink:
@@ -35,7 +37,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "NFEC1",
     name: "N. Feather - Lobin",
-    description: "",
+    description: "Length: 2.7 miles.",
     min: 400,
     max: 2000,
     awLink:
@@ -139,7 +141,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "SBRC1",
     name: "Salmon - Butler",
-    description: "",
+    description: "Length: 4 miles.",
     min: 1200,
     max: 4500,
     awLink:
@@ -149,7 +151,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "SBRC1",
     name: "Salmon - Nordheimer",
-    description: "",
+    description: "Length: 6.5 miles.",
     min: 1200,
     max: 4500,
     awLink:
@@ -158,8 +160,8 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "11527000",
-    name: "Trinity",
-    description: "",
+    name: "Trinity - Pigeon Point",
+    description: "Length: 5.5 miles.",
     min: 500,
     max: 40000,
     awLink:
@@ -212,17 +214,35 @@ export const defaultGauges: RiverInfo[] = [
 ];
 
 export const fetchLatestReading = async (gauge: RiverInfo) => {
+  const now = moment();
   if (gauge.isUsgs) {
-    // const response = await fetch(
-    //   `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${gauge.number}&siteStatus=all&period=PT2H`
-    // );
-    // const data = await response.json() as UsgsResponse;
-    // const filtered = data.value.timeSeries
-    //   .filter(({ variable }) => variable.unit.unitCode === "ft3/s")
-    return 0
+    const response = await fetch(
+      `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${gauge.number}&siteStatus=all&period=PT2H`
+    );
+    const data = await response.json() as UsgsResponse;
+    const filtered = data.value.timeSeries
+      .filter(({ variable }) => variable.unit.unitCode === "ft3/s")
+
+    if (filtered.length === 0 || !filtered[0]?.values || filtered[0].values.length === 0) {
+      return ":( unknown";
+    }
+    const d = filtered[0]?.values[0]?.value[0]
+    const hrsSince = moment.duration(now.diff(d.dateTime)).asHours();
+    if (hrsSince > 6) {
+      return ":( stale data";
+    }
+    return (d?.value || "0 cfs");
   }
   const response = await fetch(`https://api.water.noaa.gov/nwps/v1/gauges/${gauge.number}/stageflow`)
   const data = await response.json() as NoaaPrediction;
+  if (!data.observed || !data.observed.data || data.observed.data.length === 0) {
+    return ":( unknown";
+  }
+  const d = data.observed?.data[data.observed.data.length - 1]
+  const hrsSince = moment.duration(now.diff(d.validTime)).asHours();
+  if (hrsSince > 6) {
+    return ":( stale data";
+  }
 
-  return data.observed?.data[data.observed.data.length - 1]?.secondary * 1000;
+  return (d?.secondary * 1000).toString() + " cfs";
 }

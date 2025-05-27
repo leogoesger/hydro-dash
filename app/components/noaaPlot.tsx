@@ -18,7 +18,7 @@ interface NoaaData {
   secondary: number;
 }
 interface NoaaPredictionObserved {
-  data: [NoaaData];
+  data: NoaaData[];
 }
 export interface NoaaPrediction {
   observed: NoaaPredictionObserved;
