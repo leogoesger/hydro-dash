@@ -163,6 +163,12 @@ const MapPage = () => {
           id: "points",
           type: "symbol",
           source: "points",
+          paint: {
+            "text-color":
+              map.getStyle()?.imports?.[0]?.data?.name === "Mapbox Standard"
+                ? "black"
+                : "white",
+          },
           layout: {
             "text-field": ["get", "title"],
             "text-justify": "auto",
