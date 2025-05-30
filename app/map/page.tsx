@@ -109,6 +109,13 @@ const MapPage = () => {
               map.getStyle()?.imports?.[0]?.data?.name === "Mapbox Standard"
                 ? "black"
                 : "white",
+            "text-opacity": {
+              stops: [
+                [0, 0],
+                [10, 0],
+                [12, 1],
+              ],
+            },
           },
           layout: {
             "text-field": ["get", "title"],

@@ -24,12 +24,9 @@ export const PlotLayout = () => {
         setGauges(defaultGauges);
         localStorage.setItem("gauges", JSON.stringify(defaultGauges));
       } else {
-        console.log("Using stored gauges");
         setGauges(storedGaugesJson);
       }
     } else {
-      console.log("No stored gauges", defaultGauges);
-      console.log(defaultGauges);
       setGauges(defaultGauges);
       localStorage.setItem("gauges", JSON.stringify(defaultGauges));
     }
@@ -43,8 +40,6 @@ export const PlotLayout = () => {
   };
 
   const resetGauges = () => {
-    console.log("Resetting gauges to default");
-    console.log(defaultGauges);
     setGauges(defaultGauges);
     localStorage.setItem("gauges", JSON.stringify(defaultGauges));
   };
