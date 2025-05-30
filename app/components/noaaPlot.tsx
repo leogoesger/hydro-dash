@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { ExpandMore, VisibilityOff } from "@mui/icons-material";
 import { RiverInfo } from "../gauges";
-
+import { WeatherButton } from "./weather";
 interface NoaaData {
   validTime: string;
   primary: number;
@@ -172,9 +172,12 @@ export const NoaaPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
               </Button>
             )}
 
-            <Button onClick={() => window.open(gauge.awLink, "_blank")}>
-              <b>AW</b>
-            </Button>
+            <div>
+              <WeatherButton riverData={gauge} />
+              <Button onClick={() => window.open(gauge.awLink, "_blank")}>
+                <b>AW</b>
+              </Button>
+            </div>
           </div>
         </AccordionActions>
       </Accordion>

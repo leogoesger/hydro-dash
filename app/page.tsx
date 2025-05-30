@@ -1,6 +1,7 @@
 "use client"; // 👈 use it here
 import Image from "next/image";
 import { PlotLayout } from "./components/plotLayout";
+import { Typography } from "@mui/material";
 
 export default function Home() {
   return (
@@ -29,7 +30,7 @@ export default function Home() {
       </div>
       <PlotLayout />
 
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+      <footer className="row-start-3 flex flex-wrap items-center justify-center">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href="https://www.linkedin.com/in/leo-qiu/"
@@ -46,6 +47,33 @@ export default function Home() {
           by leogesger
         </a>
       </footer>
+
+      <Typography variant="subtitle2" style={{ color: "#535353" }}>
+        Data from{" "}
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="http://www.awetstate.com/"
+        >
+          Wet State
+        </a>
+        ,{" "}
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.cacreeks.com/"
+        >
+          CA Creeking
+        </a>{" "}
+        &{" "}
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.americanwhitewater.org/"
+        >
+          AW
+        </a>
+      </Typography>
     </div>
   );
 }

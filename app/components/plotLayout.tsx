@@ -21,7 +21,6 @@ export const PlotLayout = () => {
     if (storedGauges) {
       const storedGaugesJson = JSON.parse(storedGauges);
       if (storedGaugesJson.length != defaultGauges.length) {
-        console.log("Resetting gauges");
         setGauges(defaultGauges);
         localStorage.setItem("gauges", JSON.stringify(defaultGauges));
       } else {
@@ -29,7 +28,8 @@ export const PlotLayout = () => {
         setGauges(storedGaugesJson);
       }
     } else {
-      console.log("No stored gauges");
+      console.log("No stored gauges", defaultGauges);
+      console.log(defaultGauges);
       setGauges(defaultGauges);
       localStorage.setItem("gauges", JSON.stringify(defaultGauges));
     }
@@ -40,6 +40,13 @@ export const PlotLayout = () => {
     newGauges[gaugeIdx].display = !newGauges[gaugeIdx].display;
     setGauges(newGauges);
     localStorage.setItem("gauges", JSON.stringify(newGauges));
+  };
+
+  const resetGauges = () => {
+    console.log("Resetting gauges to default");
+    console.log(defaultGauges);
+    setGauges(defaultGauges);
+    localStorage.setItem("gauges", JSON.stringify(defaultGauges));
   };
 
   return (
@@ -63,13 +70,17 @@ export const PlotLayout = () => {
         className="flex flex-row gap-8 row-start-2 items-center flex-wrap justify-center"
         style={{ marginTop: "3rem" }}
       >
-        <Settings toggleGauge={toggleGauge} gauges={gauges} />
+        <Settings
+          toggleGauge={toggleGauge}
+          gauges={gauges}
+          resetGauges={resetGauges}
+        />
         {gauges
           .filter((g) => g.display)
           .map((gauge, idx) =>
             gauge.isUsgs ? (
               <UsgsPlot
-                key={gauge.number}
+                key={gauge.number + idx}
                 gauge={gauge}
                 toggleGauge={() => {
                   setSnackbarOpen(true);
@@ -78,7 +89,7 @@ export const PlotLayout = () => {
               />
             ) : (
               <NoaaPlot
-                key={gauge.number}
+                key={gauge.number + idx}
                 gauge={gauge}
                 toggleGauge={() => {
                   setSnackbarOpen(true);

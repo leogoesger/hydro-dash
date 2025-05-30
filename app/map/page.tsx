@@ -2,37 +2,15 @@
 "use client"; // 👈 use it here
 
 import { useRef, useEffect, useState } from "react";
-import mapboxgl, { GeoJSONFeature, Map } from "mapbox-gl";
+import mapboxgl, { Map } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { Drawer, Typography, Button, Snackbar, Alert } from "@mui/material";
+import { Snackbar, Alert } from "@mui/material";
 import { GetGaugeMappedByName } from "./rivers";
 import { fetchLatestReading, RiverInfo } from "../gauges";
-import { UsgsPlot, NoaaPlot } from "../components/plotLayout";
 import { LayerToggle } from "./layerToggle";
+import { GaugeDrawer } from "./drawer";
+import { getUniqueFeatures } from "./helpers";
 
-const getUniqueFeatures = (
-  features: GeoJSONFeature[],
-  comparatorProperty: string
-) => {
-  const uniqueIds = new Set();
-  const uniqueFeatures = [];
-  for (const feature of features) {
-    if (feature.properties === null) {
-      continue;
-    }
-    const id = feature.properties[comparatorProperty];
-    if (!uniqueIds.has(id)) {
-      uniqueIds.add(id);
-      uniqueFeatures.push(feature);
-    }
-  }
-  return uniqueFeatures;
-};
-
-const lineDataV = require("./lines_V.json");
-const lineDataIV = require("./lines_IV.json");
-const lineDataIII = require("./lines_III.json");
-const pointData = require("./points.json");
 const putinData = require("./putin.json");
 
 mapboxgl.accessToken =
@@ -90,56 +68,21 @@ const MapPage = () => {
     );
 
     map.on("style.load", () => {
-      map.addSource("linesV", {
-        type: "geojson",
-        data: lineDataV,
+      map.addSource("lines", {
+        type: "vector",
+        url: "mapbox://leogoesger.azyr6eka",
       });
       map.addLayer({
-        id: "linesV",
+        id: "lines",
         type: "line",
-        source: "linesV",
+        source: "lines",
+        "source-layer": "yak-lines-87swgb",
         layout: {
           "line-join": "round",
           "line-cap": "round",
         },
         paint: {
-          "line-color": "red",
-          "line-width": 5,
-        },
-      });
-
-      map.addSource("linesIV", {
-        type: "geojson",
-        data: lineDataIV,
-      });
-      map.addLayer({
-        id: "linesIV",
-        type: "line",
-        source: "linesIV",
-        layout: {
-          "line-join": "round",
-          "line-cap": "round",
-        },
-        paint: {
-          "line-color": "#000",
-          "line-width": 5,
-        },
-      });
-
-      map.addSource("linesIII", {
-        type: "geojson",
-        data: lineDataIII,
-      });
-      map.addLayer({
-        id: "linesIII",
-        type: "line",
-        source: "linesIII",
-        layout: {
-          "line-join": "round",
-          "line-cap": "round",
-        },
-        paint: {
-          "line-color": "blue",
+          "line-color": ["get", "fill"],
           "line-width": 5,
         },
       });
@@ -153,16 +96,14 @@ const MapPage = () => {
         }
 
         map.addSource("points", {
-          type: "geojson",
-          data: pointData,
-          cluster: true,
-          clusterMaxZoom: 20, // Max zoom to cluster points on
-          clusterRadius: 10,
+          type: "vector",
+          url: "mapbox://leogoesger.agewo3tk",
         });
         map.addLayer({
           id: "points",
           type: "symbol",
           source: "points",
+          "source-layer": "yak-points-0jmf4b",
           paint: {
             "text-color":
               map.getStyle()?.imports?.[0]?.data?.name === "Mapbox Standard"
@@ -197,7 +138,7 @@ const MapPage = () => {
       });
     });
 
-    map.on("click", ["linesV", "linesIV", "linesIII", "points"], (e) => {
+    map.on("click", ["lines", "points"], (e) => {
       if (e.features !== undefined) {
         const pointsFeatures = e.features.filter(
           (feature) => feature?.source === "points"
@@ -232,18 +173,18 @@ const MapPage = () => {
       }
     });
 
-    map.on("mouseenter", ["linesV", "linesIV", "linesIII", "points"], () => {
+    map.on("mouseenter", ["lines", "points"], () => {
       map.getCanvas().style.cursor = "pointer";
     });
 
-    map.on("mouseleave", ["linesV", "linesIV", "linesIII", "points"], () => {
+    map.on("mouseleave", ["lines", "points"], () => {
       map.getCanvas().style.cursor = "grab";
     });
 
     map.on("zoomend", (e) => {
       if (e.target.getZoom() > 10) {
         const features = map.queryRenderedFeatures({
-          layers: ["linesV", "linesIV", "linesIII"],
+          layers: ["lines"],
         });
         const uniqueFeatures = getUniqueFeatures(features, "name");
         if (uniqueFeatures.length == 1) {
@@ -265,7 +206,7 @@ const MapPage = () => {
         toggleStyle={toggleStyle}
       />
       <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={snackbarOpen}
         onClose={() => setSnackbarOpen(false)}
         autoHideDuration={5000}
@@ -279,41 +220,10 @@ const MapPage = () => {
           {cfs}
         </Alert>
       </Snackbar>
-      <Drawer
-        open={riverData !== null}
-        onClose={() => setRiverData(null)}
-        anchor="right"
-      >
-        <div style={{ padding: "1rem" }}>
-          <Typography variant="h6">{riverData?.name}</Typography>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: riverData?.description as string,
-            }}
-            style={{ maxWidth: "300px" }}
-          />
-
-          <div style={{ marginTop: "1rem" }}>
-            {riverData &&
-              (riverData.isUsgs ? (
-                <UsgsPlot key={riverData.number} gauge={riverData} />
-              ) : (
-                <NoaaPlot key={riverData.number} gauge={riverData} />
-              ))}
-          </div>
-        </div>
-        <Button
-          onClick={() => setRiverData(null)}
-          style={{
-            marginTop: "1rem",
-            zIndex: 100,
-            width: "90%",
-            margin: "0 auto",
-          }}
-        >
-          Close
-        </Button>
-      </Drawer>
+      <GaugeDrawer
+        riverData={riverData}
+        clearRiverData={() => setRiverData(null)}
+      />
 
       <div
         style={{

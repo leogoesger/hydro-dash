@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { ExpandMore, VisibilityOff } from "@mui/icons-material";
 import { RiverInfo } from "../gauges";
+import { WeatherButton } from "./weather";
 
 export interface UsgsResponse {
   value: Value;
@@ -151,9 +152,12 @@ export const UsgsPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
               </Button>
             )}
 
-            <Button onClick={() => window.open(gauge.awLink, "_blank")}>
-              <b>AW</b>
-            </Button>
+            <div>
+              <WeatherButton riverData={gauge} />
+              <Button onClick={() => window.open(gauge.awLink, "_blank")}>
+                <b>AW</b>
+              </Button>
+            </div>
           </div>
         </AccordionActions>
       </Accordion>

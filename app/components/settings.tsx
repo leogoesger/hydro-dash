@@ -13,9 +13,10 @@ import { RiverInfo } from "../gauges";
 interface IProps {
   gauges: RiverInfo[];
   toggleGauge: (gaugeIdx: number) => void;
+  resetGauges: () => void;
 }
 
-export const Settings: FC<IProps> = ({ gauges, toggleGauge }) => {
+export const Settings: FC<IProps> = ({ gauges, toggleGauge, resetGauges }) => {
   const [open, toggleDrawer] = useState(false);
   return (
     <>
@@ -31,11 +32,11 @@ export const Settings: FC<IProps> = ({ gauges, toggleGauge }) => {
         <SettingsIcon sx={{ color: yellow[700] }} fontSize="large" />
       </Button>
       <Drawer open={open} onClose={() => toggleDrawer(false)} anchor="right">
-        <FormGroup style={{ padding: "2rem" }}>
+        <FormGroup style={{ padding: "0.7rem" }}>
           {gauges.map((g, idx) => {
             return (
               <FormControlLabel
-                key={g.number}
+                key={g.number + idx}
                 control={
                   <Switch
                     checked={g.display}
@@ -46,13 +47,20 @@ export const Settings: FC<IProps> = ({ gauges, toggleGauge }) => {
               />
             );
           })}
-          <Button
-            onClick={() => toggleDrawer(false)}
-            style={{ marginTop: "1rem", zIndex: 100 }}
-          >
-            Close
-          </Button>
         </FormGroup>
+        <Button
+          onClick={resetGauges}
+          style={{ margin: "0 auto", zIndex: 100, width: "200px" }}
+        >
+          Reset
+        </Button>
+        <Button
+          onClick={() => toggleDrawer(false)}
+          variant="contained"
+          style={{ margin: "1rem auto", zIndex: 100, width: "200px" }}
+        >
+          Close
+        </Button>
       </Drawer>
     </>
   );
