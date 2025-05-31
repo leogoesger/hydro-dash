@@ -14,7 +14,10 @@ const darkTheme = createTheme({
   },
 });
 
-const versions = [{ name: "v1.0", date: "2025-05-30", reset: true }];
+const versions = [
+  { name: "v1.1", date: "2025-05-30", reset: false },
+  { name: "v1.0", date: "2025-05-30", reset: true },
+];
 
 export default function ClientLayout({
   children,
@@ -24,7 +27,7 @@ export default function ClientLayout({
   useEffect(() => {
     const storedVersion = localStorage.getItem("version");
     if (!storedVersion || storedVersion !== versions[0].name) {
-      mapboxgl.clearStorage();
+      mapboxgl.clearStorage(); // Titleset has 12 hrs of browser cache.
       localStorage.setItem("version", versions[0].name);
       versions.forEach((v) => {
         if (v.name === storedVersion) {
