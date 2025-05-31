@@ -3,6 +3,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { RouteBotton } from "./components/routeButton";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useEffect } from "react";
+import mapboxgl from "mapbox-gl";
 
 const darkTheme = createTheme({
   palette: {
@@ -23,6 +24,7 @@ export default function ClientLayout({
   useEffect(() => {
     const storedVersion = localStorage.getItem("version");
     if (!storedVersion || storedVersion !== versions[0].name) {
+      mapboxgl.clearStorage();
       localStorage.setItem("version", versions[0].name);
       versions.forEach((v) => {
         if (v.name === storedVersion) {
