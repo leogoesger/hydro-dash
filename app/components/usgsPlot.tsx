@@ -1,6 +1,6 @@
 import { useState, useEffect, FC } from "react";
 import Plot from "react-plotly.js";
-import { getEmoji } from "./plotLayout";
+import { getEmoji, getFlowColor } from "./plotLayout";
 import {
   Accordion,
   AccordionActions,
@@ -11,6 +11,7 @@ import {
 import { ExpandMore, VisibilityOff } from "@mui/icons-material";
 import { RiverInfo } from "../gauges";
 import { WeatherButton } from "./weather";
+import moment from "moment";
 
 export interface UsgsResponse {
   value: Value;
@@ -137,6 +138,23 @@ export const UsgsPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
               },
             }}
           />
+          {observedY && observedY.length > 0 && (
+            <div style={{ fontSize: "0.9rem", color: "grey" }}>
+              <span
+                style={{
+                  color: getFlowColor(
+                    observedY[observedY.length - 1],
+                    gauge.min,
+                    gauge.max
+                  ),
+                  fontWeight: "bold",
+                }}
+              >
+                {observedY[observedY.length - 1]}cfs
+              </span>{" "}
+              as of {moment(observedX[observedX.length - 1]).fromNow()}
+            </div>
+          )}
         </AccordionDetails>
         <AccordionActions>
           <div
