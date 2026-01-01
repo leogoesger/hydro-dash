@@ -1,7 +1,7 @@
 import { useState, useEffect, FC } from "react";
 import Plot from "react-plotly.js";
 import moment from "moment";
-import { getEmoji } from "./plotLayout";
+import { getEmoji, getFlowColor } from "./plotLayout";
 import {
   Accordion,
   AccordionActions,
@@ -90,21 +90,23 @@ export const NoaaPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          {isLoading
-            ? "❓"
-            : getEmoji(
-                observedY[observedY.length - 1],
-                forcastedY,
-                gauge.min,
-                gauge.max
-              )}{" "}
-          {isError
-            ? "Cannot load gauge"
-            : isLoading
-            ? "Loading ..."
-            : gauge.name}
+          <div>
+            {isLoading
+              ? "❓"
+              : getEmoji(
+                  observedY[observedY.length - 1],
+                  forcastedY,
+                  gauge.min,
+                  gauge.max
+                )}{" "}
+            {isError
+              ? "Cannot load gauge"
+              : isLoading
+              ? "Loading ..."
+              : gauge.name}
+          </div>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails style={{ position: "relative" }}>
           <Plot
             data={[
               {
@@ -157,6 +159,14 @@ export const NoaaPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
               },
             }}
           />
+          {observedY && observedY.length > 0 && (
+            <div style={{ fontSize: "0.9rem", color: "grey" }}>
+              <span style={{ color: getFlowColor(observedY[observedY.length - 1], gauge.min, gauge.max), fontWeight: "bold" }}>
+                {observedY[observedY.length - 1]}cfs
+              </span>{" "}
+              as of {moment(observedX[observedX.length - 1]).fromNow()}
+            </div>
+          )}
         </AccordionDetails>
         <AccordionActions>
           <div

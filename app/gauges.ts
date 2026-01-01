@@ -184,7 +184,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "loci1",
-    name: "Lochsa - Fish Creek to Split Creek",
+    name: "Lochsa - Fish Creek",
     description: "Length: 12 miles.",
     min: 1200,
     max: 25000,

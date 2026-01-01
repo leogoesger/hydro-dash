@@ -119,3 +119,13 @@ export const getEmoji = (
   }
   return "🔴";
 };
+
+export const getFlowColor = (observedValue: number, min: number, max: number) => {
+  if (observedValue > max) {
+    return "#f5db17ff"; // yellow
+  }
+  if (observedValue > min && observedValue < max) {
+    return "#17b522ff"; // green
+  }
+  return "#f51717ff"; // red
+}
