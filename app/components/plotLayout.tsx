@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Settings } from "./settings";
 import { RiverInfo, defaultGauges } from "../gauges";
 import { Snackbar, Alert } from "@mui/material";
+import { CdecPlot } from "./cdecPlot";
 
 export const NoaaPlot = dynamic(() => import("./noaaPlot"), {
   ssr: false,
@@ -73,7 +74,7 @@ export const PlotLayout = () => {
         {gauges
           .filter((g) => g.display)
           .map((gauge, idx) =>
-            gauge.isUsgs ? (
+            gauge.type === "usgs" ? (
               <UsgsPlot
                 key={gauge.number + idx}
                 gauge={gauge}
@@ -82,8 +83,17 @@ export const PlotLayout = () => {
                   toggleGauge(idx);
                 }}
               />
-            ) : (
+            ) : gauge.type === "noaa" ? (
               <NoaaPlot
+                key={gauge.number + idx}
+                gauge={gauge}
+                toggleGauge={() => {
+                  setSnackbarOpen(true);
+                  toggleGauge(idx);
+                }}
+              />
+            ) : (
+              <CdecPlot
                 key={gauge.number + idx}
                 gauge={gauge}
                 toggleGauge={() => {
@@ -100,7 +110,7 @@ export const PlotLayout = () => {
 
 export const getEmoji = (
   observedValue: number,
-  predictedValues: number[],
+  predictedValues: number[] | null,
   min: number,
   max: number
 ) => {
@@ -110,7 +120,7 @@ export const getEmoji = (
   if (observedValue > min && observedValue < max) {
     return "🟢";
   }
-  if (predictedValues.length > 0) {
+  if (predictedValues && predictedValues.length > 0) {
     predictedValues.forEach((value) => {
       if (value > min && value < max) {
         return "🟡";
@@ -120,7 +130,11 @@ export const getEmoji = (
   return "🔴";
 };
 
-export const getFlowColor = (observedValue: number, min: number, max: number) => {
+export const getFlowColor = (
+  observedValue: number,
+  min: number,
+  max: number
+) => {
   if (observedValue > max) {
     return "#f5db17ff"; // yellow
   }
@@ -128,4 +142,4 @@ export const getFlowColor = (observedValue: number, min: number, max: number) =>
     return "#17b522ff"; // green
   }
   return "#f51717ff"; // red
-}
+};

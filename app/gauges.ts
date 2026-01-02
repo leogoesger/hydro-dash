@@ -10,13 +10,16 @@ export interface RiverInfo {
   max: number;
   awLink: string;
   weatherUrl?: string;
-  isUsgs?: boolean;
+  type: string;
   display?: boolean;
 }
 
+// Readme:
+// The way to get weather url is through `https://api.weather.gov/points/39.851,-120.902`, and it will return forecast url in the properties.forecast field.
 export const defaultGauges: RiverInfo[] = [
   {
     number: "NFEC1",
+    type: "noaa",
     name: "N. Feather - Rock Creek",
     description: "Length: 3.8 miles.",
     min: 400,
@@ -28,6 +31,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "NFEC1",
+    type: "noaa",
     name: "N. Feather - Tobin",
     description: "Length: 1.3 miles.",
     min: 400,
@@ -39,6 +43,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "NFEC1",
+    type: "noaa",
     name: "N. Feather - Lobin",
     description: "Length: 2.7 miles.",
     min: 400,
@@ -50,6 +55,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "TRRN2",
+    type: "noaa",
     name: "Truckee - Reno",
     description: "",
     min: 300,
@@ -61,6 +67,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "FARC1",
+    type: "noaa",
     name: "Truckee - Farad",
     description: "",
     min: 300,
@@ -72,6 +79,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "NFDC1",
+    type: "noaa",
     name: "N. American - Chamberlain",
     description: "Length: 4.8 miles.",
     min: 300,
@@ -83,6 +91,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "cbac1",
+    type: "noaa",
     name: "S. American - Chili Bar",
     description: "",
     min: 800,
@@ -94,6 +103,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "JNSC1",
+    type: "noaa",
     name: "S. Yuba - E to P",
     description: "",
     min: 400,
@@ -105,6 +115,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "GYRC1",
+    type: "noaa",
     name: "N. Yuba - Goodyears Bar",
     description: "",
     min: 800,
@@ -116,6 +127,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "SEIC1",
+    type: "noaa",
     name: "Klamath - Happy Camp",
     description: "",
     min: 700,
@@ -127,6 +139,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "FTSC1",
+    type: "noaa",
     name: "Eel - Fort Seward",
     description: "",
     min: 500,
@@ -138,18 +151,19 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "11355010",
+    type: "usgs",
     name: "Pit 1",
     description: "",
     min: 600,
     max: 3000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/6799/main",
-    isUsgs: true,
     display: true,
     weatherUrl: "https://api.weather.gov/gridpoints/STO/45,174/forecast"
   },
   {
     number: "SBRC1",
+    type: "noaa",
     name: "Salmon - Butler",
     description: "Length: 4 miles.",
     min: 1200,
@@ -161,6 +175,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "SBRC1",
+    type: "noaa",
     name: "Salmon - Nordheimer",
     description: "Length: 6.5 miles.",
     min: 1200,
@@ -178,12 +193,13 @@ export const defaultGauges: RiverInfo[] = [
     max: 40000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/316/main",
-    isUsgs: true,
+    type: "usgs",
     display: true,
     weatherUrl: "https://api.weather.gov/gridpoints/EKA/96,99/forecast"
   },
   {
     number: "loci1",
+    type: "noaa",
     name: "Lochsa - Fish Creek",
     description: "Length: 12 miles.",
     min: 1200,
@@ -195,6 +211,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "13247500",
+    type: "noaa",
     name: "Payette - Upper Main",
     description: "Length: 7 miles.",
     min: 800,
@@ -206,6 +223,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "13247500",
+    type: "noaa",
     name: "S. Payette - Staircase",
     description:
       "<b>Gauge is for Upper Main Payette, not Staircase. Estimation can by done by subtracting the NF Payette at Banks from the Main Fork at Horseshoe Bend.</b> <br>Length: 5 miles.",
@@ -218,6 +236,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "13246000",
+    type: "noaa",
     name: "N. Payette - The North Fork",
     description: "Length: 16 miles.",
     min: 400,
@@ -229,6 +248,7 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "14123500",
+    type: "noaa",
     name: "White Salmon",
     description: "Length: 4.5 miles.",
     min: 450,
@@ -238,11 +258,23 @@ export const defaultGauges: RiverInfo[] = [
     display: true,
     weatherUrl: "https://api.weather.gov/gridpoints/PDT/46,124/forecast"
   },
+  {
+    number: "MER",
+    type: "aw",
+    name: "M. Feather - Devils Canyon",
+    description: "Length: 33 miles.",
+    min: 700,
+    max: 3000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/193/main",
+    display: true,
+    weatherUrl: "https://api.weather.gov/gridpoints/STO/72,121/forecast"
+  },
 ];
 
 export const fetchLatestReading = async (gauge: RiverInfo) => {
   const now = moment();
-  if (gauge.isUsgs) {
+  if (gauge.type === "usgs") {
     const response = await fetch(
       `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${gauge.number}&siteStatus=all&period=PT2H`
     );

@@ -1,17 +1,7 @@
 import { useState, useEffect, FC } from "react";
-import Plot from "react-plotly.js";
 import moment from "moment";
-import { getEmoji, getFlowColor } from "./plotLayout";
-import {
-  Accordion,
-  AccordionActions,
-  AccordionSummary,
-  AccordionDetails,
-  Button,
-} from "@mui/material";
-import { ExpandMore, VisibilityOff } from "@mui/icons-material";
 import { RiverInfo } from "../gauges";
-import { WeatherButton } from "./weather";
+import { FlowPlot } from "./flowPlot";
 interface NoaaData {
   validTime: string;
   primary: number;
@@ -80,118 +70,16 @@ export const NoaaPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
   }, [gauge.number]);
 
   return (
-    <>
-      <Accordion
-        defaultExpanded={window.innerWidth > 900 || toggleGauge == null}
-        style={{ margin: 0 }}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMore />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          <div>
-            {isLoading
-              ? "❓"
-              : getEmoji(
-                  observedY[observedY.length - 1],
-                  forcastedY,
-                  gauge.min,
-                  gauge.max
-                )}{" "}
-            {isError
-              ? "Cannot load gauge"
-              : isLoading
-              ? "Loading ..."
-              : gauge.name}
-          </div>
-        </AccordionSummary>
-        <AccordionDetails style={{ position: "relative" }}>
-          <Plot
-            data={[
-              {
-                x: observedX,
-                y: observedY,
-                type: "scatter",
-                hoverinfo: "x+y",
-                mode: "lines",
-                marker: { color: "rgba(54, 73, 245, 0.7)" },
-              },
-              {
-                x: forcastedX,
-                y: forcastedY,
-                hoverinfo: "x+y",
-                type: "scatter",
-                mode: "lines",
-                marker: { color: "rgba(221, 54, 245, 0.7)" },
-              },
-              {
-                x: [
-                  observedX[observedX.length - 1],
-                  observedX[observedX.length - 1],
-                ],
-                y: [0, Math.max(...forcastedY)],
-                type: "scatter",
-                mode: "lines",
-                line: {
-                  shape: "spline",
-                  width: 4,
-                },
-                hoverinfo: "skip",
-                marker: {
-                  color: "rgba(113, 217, 140, 0.41)",
-                },
-              },
-            ]}
-            config={{ displayModeBar: false }}
-            layout={{
-              font: { color: "grey" },
-              paper_bgcolor: "#283439",
-              plot_bgcolor: "#283439",
-              yaxis: { gridcolor: "grey" },
-              showlegend: false,
-              margin: { t: 25, r: 15, l: 40, b: 35 },
-              width: 300,
-              height: 250,
-              xaxis: {
-                tickformat: "%m/%d",
-                hoverformat: "%m/%d %H:%M",
-              },
-            }}
-          />
-          {observedY && observedY.length > 0 && (
-            <div style={{ fontSize: "0.9rem", color: "grey" }}>
-              <span style={{ color: getFlowColor(observedY[observedY.length - 1], gauge.min, gauge.max), fontWeight: "bold" }}>
-                {observedY[observedY.length - 1]}cfs
-              </span>{" "}
-              as of {moment(observedX[observedX.length - 1]).fromNow()}
-            </div>
-          )}
-        </AccordionDetails>
-        <AccordionActions>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "100%",
-            }}
-          >
-            {toggleGauge != null && (
-              <Button onClick={toggleGauge} color="secondary">
-                <VisibilityOff />
-              </Button>
-            )}
-
-            <div>
-              <WeatherButton riverData={gauge} />
-              <Button onClick={() => window.open(gauge.awLink, "_blank")}>
-                <b>AW</b>
-              </Button>
-            </div>
-          </div>
-        </AccordionActions>
-      </Accordion>
-    </>
+    <FlowPlot 
+      gauge={gauge}
+      observedX={observedX}
+      observedY={observedY}
+      forecastedX={forcastedX}
+      forecastedY={forcastedY}
+      toggleGauge={toggleGauge}
+      isLoading={isLoading}
+      isError={isError}
+    />
   );
 };
 

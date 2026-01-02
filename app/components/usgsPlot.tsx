@@ -1,17 +1,6 @@
 import { useState, useEffect, FC } from "react";
-import Plot from "react-plotly.js";
-import { getEmoji, getFlowColor } from "./plotLayout";
-import {
-  Accordion,
-  AccordionActions,
-  AccordionSummary,
-  AccordionDetails,
-  Button,
-} from "@mui/material";
-import { ExpandMore, VisibilityOff } from "@mui/icons-material";
 import { RiverInfo } from "../gauges";
-import { WeatherButton } from "./weather";
-import moment from "moment";
+import { FlowPlot } from "./flowPlot";
 
 export interface UsgsResponse {
   value: Value;
@@ -86,100 +75,14 @@ export const UsgsPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
     return <div>Gauge not found</div>;
   }
   return (
-    <>
-      <Accordion
-        defaultExpanded={window.innerWidth > 900 || toggleGauge == null}
-        style={{ margin: 0 }}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMore />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          {isLoading
-            ? "❓"
-            : getEmoji(
-                observedY[observedY.length - 1],
-                [],
-                gauge.min,
-                gauge.max
-              )}{" "}
-          {isError
-            ? "Cannot load gauge"
-            : isLoading
-            ? "Loading ..."
-            : gauge.name}
-        </AccordionSummary>
-        <AccordionDetails>
-          <Plot
-            data={[
-              {
-                x: observedX,
-                y: observedY,
-                type: "scatter",
-                hoverinfo: "x+y",
-                mode: "lines",
-                marker: { color: "rgba(54, 73, 245, 0.7)" },
-              },
-            ]}
-            config={{ displayModeBar: false }}
-            layout={{
-              font: { color: "grey" },
-              paper_bgcolor: "#283439",
-              plot_bgcolor: "#283439",
-              yaxis: { gridcolor: "grey", position: 0 },
-              showlegend: false,
-              margin: { t: 25, r: 15, l: 40, b: 35 },
-              width: 300,
-              height: 250,
-              xaxis: {
-                tickformat: "%m/%d",
-                hoverformat: "%m/%d %H:%M",
-              },
-            }}
-          />
-          {observedY && observedY.length > 0 && (
-            <div style={{ fontSize: "0.9rem", color: "grey" }}>
-              <span
-                style={{
-                  color: getFlowColor(
-                    observedY[observedY.length - 1],
-                    gauge.min,
-                    gauge.max
-                  ),
-                  fontWeight: "bold",
-                }}
-              >
-                {observedY[observedY.length - 1]}cfs
-              </span>{" "}
-              as of {moment(observedX[observedX.length - 1]).fromNow()}
-            </div>
-          )}
-        </AccordionDetails>
-        <AccordionActions>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "100%",
-            }}
-          >
-            {toggleGauge != null && (
-              <Button onClick={toggleGauge} color="secondary">
-                <VisibilityOff />
-              </Button>
-            )}
-
-            <div>
-              <WeatherButton riverData={gauge} />
-              <Button onClick={() => window.open(gauge.awLink, "_blank")}>
-                <b>AW</b>
-              </Button>
-            </div>
-          </div>
-        </AccordionActions>
-      </Accordion>
-    </>
+    <FlowPlot
+      gauge={gauge}
+      observedX={observedX}
+      observedY={observedY}
+      toggleGauge={toggleGauge}
+      isLoading={isLoading}
+      isError={isError}
+    />
   );
 };
 
