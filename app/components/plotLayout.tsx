@@ -1,17 +1,8 @@
-import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { Settings } from "./settings";
 import { RiverInfo, defaultGauges } from "../gauges";
 import { Snackbar, Alert } from "@mui/material";
-import { CdecPlot } from "./cdecPlot";
-
-export const NoaaPlot = dynamic(() => import("./noaaPlot"), {
-  ssr: false,
-});
-
-export const UsgsPlot = dynamic(() => import("./usgsPlot"), {
-  ssr: false,
-});
+import { FlowCard } from "./flowCard";
 
 export const PlotLayout = () => {
   const [gauges, setGauges] = useState<RiverInfo[]>([]);
@@ -73,36 +64,16 @@ export const PlotLayout = () => {
         />
         {gauges
           .filter((g) => g.display)
-          .map((gauge, idx) =>
-            gauge.type === "usgs" ? (
-              <UsgsPlot
-                key={gauge.number + idx}
-                gauge={gauge}
-                toggleGauge={() => {
-                  setSnackbarOpen(true);
-                  toggleGauge(idx);
-                }}
-              />
-            ) : gauge.type === "noaa" ? (
-              <NoaaPlot
-                key={gauge.number + idx}
-                gauge={gauge}
-                toggleGauge={() => {
-                  setSnackbarOpen(true);
-                  toggleGauge(idx);
-                }}
-              />
-            ) : (
-              <CdecPlot
-                key={gauge.number + idx}
-                gauge={gauge}
-                toggleGauge={() => {
-                  setSnackbarOpen(true);
-                  toggleGauge(idx);
-                }}
-              />
-            )
-          )}
+          .map((gauge, idx) => (
+            <FlowCard
+              key={gauge.number + idx}
+              gauge={gauge}
+              toggleGauge={() => {
+                setSnackbarOpen(true);
+                toggleGauge(idx);
+              }}
+            />
+          ))}
       </main>
     </>
   );

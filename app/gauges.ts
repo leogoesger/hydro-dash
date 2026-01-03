@@ -1,6 +1,6 @@
 import moment from "moment";
-import { NoaaPrediction } from "./components/noaaPlot";
-import { UsgsResponse } from "./components/usgsPlot";
+import { NoaaPrediction } from "./components/flowCard/noaaCard";
+import { UsgsResponse } from "./components/flowCard/usgsCard";
 
 export interface RiverInfo {
   number: string;

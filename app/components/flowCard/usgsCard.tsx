@@ -1,6 +1,6 @@
 import { useState, useEffect, FC } from "react";
-import { RiverInfo } from "../gauges";
-import { FlowPlot } from "./flowPlot";
+import { RiverInfo } from "../../gauges";
+import { CardLayout } from "./cardLayout";
 
 export interface UsgsResponse {
   value: Value;
@@ -37,7 +37,7 @@ interface IProps {
   toggleGauge?: () => void;
 }
 
-export const UsgsPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
+export const UsgsCard: FC<IProps> = ({ gauge, toggleGauge }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [observedX, setObservedX] = useState<string[]>([]);
@@ -75,7 +75,7 @@ export const UsgsPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
     return <div>Gauge not found</div>;
   }
   return (
-    <FlowPlot
+    <CardLayout
       gauge={gauge}
       observedX={observedX}
       observedY={observedY}
@@ -85,5 +85,3 @@ export const UsgsPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
     />
   );
 };
-
-export default UsgsPlot;

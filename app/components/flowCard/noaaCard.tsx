@@ -1,7 +1,8 @@
 import { useState, useEffect, FC } from "react";
 import moment from "moment";
-import { RiverInfo } from "../gauges";
-import { FlowPlot } from "./flowPlot";
+import { RiverInfo } from "../../gauges";
+import { CardLayout } from "./cardLayout";
+
 interface NoaaData {
   validTime: string;
   primary: number;
@@ -20,7 +21,7 @@ interface IProps {
   toggleGauge?: () => void;
 }
 
-export const NoaaPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
+export const NoaaCard: FC<IProps> = ({ gauge, toggleGauge }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [observedX, setObservedX] = useState<string[]>([]);
@@ -70,7 +71,7 @@ export const NoaaPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
   }, [gauge.number]);
 
   return (
-    <FlowPlot 
+    <CardLayout 
       gauge={gauge}
       observedX={observedX}
       observedY={observedY}
@@ -82,5 +83,3 @@ export const NoaaPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
     />
   );
 };
-
-export default NoaaPlot;

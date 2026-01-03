@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
-import { RiverInfo } from "../gauges";
+import { RiverInfo } from "../../gauges";
 import moment from "moment";
-import { FlowPlot } from "./flowPlot";
+import { CardLayout } from "./cardLayout";
 
 interface IProps {
   gauge: RiverInfo;
@@ -20,7 +20,7 @@ export interface CdecResult {
   units: string;
 }
 
-export const CdecPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
+export const CdecCard: FC<IProps> = ({ gauge, toggleGauge }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [observedX, setObservedX] = useState<string[]>([]);
@@ -41,7 +41,6 @@ export const CdecPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
       .then((d: CdecResult[]) => {
         const x: string[] = [];
         const y: number[] = [];
-        console.log("AW Response:", d);
 
         d.forEach((item) => {
           if (item.value >= 0) {
@@ -62,7 +61,7 @@ export const CdecPlot: FC<IProps> = ({ gauge, toggleGauge }) => {
   }, [gauge?.number]);
 
   return (
-    <FlowPlot
+    <CardLayout
       gauge={gauge}
       observedX={observedX}
       observedY={observedY}

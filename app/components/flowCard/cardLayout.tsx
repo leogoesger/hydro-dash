@@ -10,9 +10,9 @@ import { FC } from "react";
 import dynamic from "next/dynamic";
 import { Data } from "plotly.js";
 import { CurrentFlow } from "./currentFlow";
-import { WeatherButton } from "./weather";
-import { RiverInfo } from "../gauges";
-import { getEmoji } from "./plotLayout";
+import { WeatherButton } from "../weather";
+import { RiverInfo } from "../../gauges";
+import { getEmoji } from "../plotLayout";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
@@ -27,7 +27,7 @@ interface IProps {
   isError?: boolean;
 }
 
-export const FlowPlot: FC<IProps> = ({
+export const CardLayout: FC<IProps> = ({
   gauge,
   observedX,
   observedY,

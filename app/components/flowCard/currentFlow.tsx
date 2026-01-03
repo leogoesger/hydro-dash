@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { RiverInfo } from "../gauges";
-import { getFlowColor } from "./plotLayout";
+import { RiverInfo } from "../../gauges";
+import { getFlowColor } from "../plotLayout";
 import moment from "moment";
 
 interface IProps {
