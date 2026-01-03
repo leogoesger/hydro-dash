@@ -2,6 +2,7 @@ import { Drawer, Typography, Button } from "@mui/material";
 import { UsgsPlot, NoaaPlot } from "../components/plotLayout";
 import { FC } from "react";
 import { RiverInfo } from "../gauges";
+import { CdecPlot } from "../components/cdecPlot";
 
 interface IProps {
   riverData: RiverInfo | null;
@@ -22,10 +23,12 @@ export const GaugeDrawer: FC<IProps> = ({ riverData, clearRiverData }) => {
 
         <div style={{ marginTop: "1rem" }}>
           {riverData &&
-            (riverData.isUsgs ? (
+            (riverData.type === "usgs" ? (
               <UsgsPlot key={riverData.number} gauge={riverData} />
-            ) : (
+            ) : riverData.type === "noaa" ? (
               <NoaaPlot key={riverData.number} gauge={riverData} />
+            ) : (
+              <CdecPlot key={riverData.number} gauge={riverData} />
             ))}
         </div>
       </div>
