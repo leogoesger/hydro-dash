@@ -4,22 +4,23 @@ import { getFlowColor } from "../plotLayout";
 import moment from "moment";
 
 interface IProps {
-  value: number;
+  observedValue: number;
+  observedDate: string;
   gauge: RiverInfo;
 }
 
-export const CurrentFlow: FC<IProps> = ({ value, gauge }) => {
+export const CurrentFlow: FC<IProps> = ({ observedDate, observedValue, gauge }) => {
   return (
     <div style={{ fontSize: "0.9rem", color: "grey", position: "absolute" }}>
       <span
         style={{
-          color: getFlowColor(value, gauge.min, gauge.max),
+          color: getFlowColor(observedValue, gauge.min, gauge.max),
           fontWeight: "bold",
         }}
       >
-        {Math.round(value)}cfs
+        {Math.round(observedValue)}cfs
       </span>{" "}
-      {moment(value).fromNow()}
+      {moment(observedDate).fromNow()}
     </div>
   );
 };

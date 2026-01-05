@@ -75,7 +75,7 @@ export const CardLayout: FC<IProps> = ({
   return (
     <Accordion
       defaultExpanded={window.innerWidth > 900 || toggleGauge == null}
-      style={{ margin: 0 }}
+      style={{ margin: 0, minWidth: 320 }}
     >
       <AccordionSummary
         expandIcon={<ExpandMore />}
@@ -118,7 +118,7 @@ export const CardLayout: FC<IProps> = ({
           }}
         />
         {observedY && observedY.length > 0 && (
-          <CurrentFlow value={observedY[observedY.length - 1]} gauge={gauge} />
+          <CurrentFlow  observedDate={observedX[observedX.length - 1]} observedValue={observedY[observedY.length - 1]}  gauge={gauge} />
         )}
       </AccordionDetails>
       <AccordionActions>
