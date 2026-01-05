@@ -25,7 +25,9 @@ body {
 }
 
 .mapboxgl-popup-content {
-  color: black
+  color: black;
+  overflow-y: scroll;
+  overflow-x: unset;
 }
 
 .mapboxgl-popup-content {
