@@ -2,6 +2,7 @@ import { FC } from "react";
 import { UsgsCard } from "./usgsCard";
 import { NoaaCard } from "./noaaCard";
 import { CdecCard } from "./cdecCard";
+import { EidCard } from "./eidCard";
 import { RiverInfo } from "@/app/gauges";
 
 interface IProps {
@@ -15,6 +16,8 @@ export const FlowCard: FC<IProps> = ({ key, gauge, toggleGauge }) => {
     <UsgsCard key={key} gauge={gauge} toggleGauge={toggleGauge} />
   ) : gauge.type === "noaa" ? (
     <NoaaCard key={key} gauge={gauge} toggleGauge={toggleGauge} />
+  ): gauge.type === "eid" ? (
+    <EidCard key={key} gauge={gauge} toggleGauge={toggleGauge} />
   ) : (
     <CdecCard key={key} gauge={gauge} toggleGauge={toggleGauge} />
   );

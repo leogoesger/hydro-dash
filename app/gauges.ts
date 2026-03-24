@@ -270,6 +270,18 @@ export const defaultGauges: RiverInfo[] = [
     display: true,
     weatherUrl: "https://api.weather.gov/gridpoints/STO/72,121/forecast"
   },
+  {
+    number: "10",
+    type: "eid",
+    name: "S. American - Kyburz",
+    description: "Length: 7.5 miles.",
+    min: 800,
+    max: 2000,
+    awLink:
+      "http://www.awetstate.com/SAmericanK.html",
+    display: true,
+    weatherUrl: "https://api.weather.gov/gridpoints/STO/72,121/forecast"
+  },
 ];
 
 export const fetchLatestReading = async (gauge: RiverInfo) => {
