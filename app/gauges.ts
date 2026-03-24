@@ -90,6 +90,18 @@ export const defaultGauges: RiverInfo[] = [
     display: true,
   },
   {
+    number: "10",
+    type: "eid",
+    name: "S. American - Kyburz",
+    description: "Length: 7.5 miles.",
+    min: 800,
+    max: 2000,
+    awLink:
+      "http://www.awetstate.com/SAmericanK.html",
+    display: true,
+    weatherUrl: "https://api.weather.gov/gridpoints/STO/72,121/forecast"
+  },
+  {
     number: "cbac1",
     type: "noaa",
     name: "S. American - Chili Bar",
@@ -269,19 +281,7 @@ export const defaultGauges: RiverInfo[] = [
       "https://www.americanwhitewater.org/content/River/view/river-detail/193/main",
     display: true,
     weatherUrl: "https://api.weather.gov/gridpoints/STO/72,121/forecast"
-  },
-  {
-    number: "10",
-    type: "eid",
-    name: "S. American - Kyburz",
-    description: "Length: 7.5 miles.",
-    min: 800,
-    max: 2000,
-    awLink:
-      "http://www.awetstate.com/SAmericanK.html",
-    display: true,
-    weatherUrl: "https://api.weather.gov/gridpoints/STO/72,121/forecast"
-  },
+  }
 ];
 
 export const fetchLatestReading = async (gauge: RiverInfo) => {
