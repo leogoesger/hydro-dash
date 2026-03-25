@@ -19,7 +19,7 @@ export interface RiverInfo {
 export const defaultGauges: RiverInfo[] = [
   {
     number: "MER",
-    type: "aw",
+    type: "cdec",
     name: "M. Feather - Devils Canyon",
     description: "Length: 33 miles.",
     min: 700,

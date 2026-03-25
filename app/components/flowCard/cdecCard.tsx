@@ -45,15 +45,16 @@ export const CdecCard: FC<IProps> = ({ gauge, toggleGauge }) => {
         d.forEach((item) => {
           if (item.value >= 0) {
             x.push(item.obsDate);
-            y.push(item.value);
+            y.push(Math.trunc(item.value));
           }
         });
+        console.log("CDEC data for station", gauge.number, { x, y });
         setObservedX(x);
         setObservedY(y);
         setIsLoading(false);
       })
       .catch((e) => {
-        console.error("Error fetching AW data:", e);
+        console.error("Error fetching CDEC data:", e);
         setIsLoading(false);
         setIsError(true);
       });

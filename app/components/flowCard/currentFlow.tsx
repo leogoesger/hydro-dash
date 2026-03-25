@@ -18,7 +18,7 @@ export const CurrentFlow: FC<IProps> = ({ observedDate, observedValue, gauge }) 
           fontWeight: "bold",
         }}
       >
-        {Math.round(observedValue)}cfs
+        {Math.round(observedValue).toString()}cfs
       </span>{" "}
       {moment(observedDate).fromNow()}
     </div>

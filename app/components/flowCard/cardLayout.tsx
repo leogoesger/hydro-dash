@@ -106,7 +106,6 @@ export const CardLayout: FC<IProps> = ({
             font: { color: "grey" },
             paper_bgcolor: "#283439",
             plot_bgcolor: "#283439",
-            yaxis: { gridcolor: "grey" },
             showlegend: false,
             margin: { t: 25, r: 15, l: 40, b: 35 },
             width: 300,
@@ -114,7 +113,12 @@ export const CardLayout: FC<IProps> = ({
             xaxis: {
               tickformat: "%m/%d",
               hoverformat: "%m/%d %H:%M",
+              nticks: 5,
             },
+            yaxis: {
+              gridcolor: "grey",
+              tickformat: '.0f'
+            }
           }}
         />
         {observedY && observedY.length > 0 && (
