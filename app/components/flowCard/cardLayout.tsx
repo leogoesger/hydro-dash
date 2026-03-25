@@ -10,7 +10,7 @@ import { FC } from "react";
 import dynamic from "next/dynamic";
 import { Data } from "plotly.js";
 import { CurrentFlow } from "./currentFlow";
-import { WeatherButton } from "../weather";
+// import { WeatherButton } from "../weather";
 import { RiverInfo } from "../../gauges";
 import { getEmoji } from "../plotLayout";
 
@@ -136,7 +136,7 @@ export const CardLayout: FC<IProps> = ({
           )}
 
           <div>
-            <WeatherButton riverData={gauge} />
+            {/* <WeatherButton riverData={gauge} /> */} 
             <Button onClick={() => window.open(gauge.awLink, "_blank")}>
               <b>AW</b>
             </Button>

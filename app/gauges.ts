@@ -18,6 +18,18 @@ export interface RiverInfo {
 // The way to get weather url is through `https://api.weather.gov/points/39.851,-120.902`, and it will return forecast url in the properties.forecast field.
 export const defaultGauges: RiverInfo[] = [
   {
+    number: "MER",
+    type: "aw",
+    name: "M. Feather - Devils Canyon",
+    description: "Length: 33 miles.",
+    min: 700,
+    max: 3000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/193/main",
+    display: true,
+    weatherUrl: "https://api.weather.gov/gridpoints/STO/72,121/forecast"
+  },
+  {
     number: "NFEC1",
     type: "noaa",
     name: "N. Feather - Rock Creek",
@@ -136,6 +148,18 @@ export const defaultGauges: RiverInfo[] = [
       "https://www.americanwhitewater.org/content/River/view/river-detail/340/main",
     display: true,
     weatherUrl: "https://api.weather.gov/gridpoints/STO/75,107/forecast",
+  },
+  {
+    number: "10296000",
+    type: "noaa",
+    name: "W. Walker - 395",
+    description: "",
+    min: 300,
+    max: 2000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/330/main",
+    weatherUrl: "https://api.weather.gov/gridpoints/REV/48,59/forecast",
+    display: true,
   },
   {
     number: "SEIC1",
@@ -269,18 +293,6 @@ export const defaultGauges: RiverInfo[] = [
       "https://www.americanwhitewater.org/content/River/view/river-detail/592/main",
     display: true,
     weatherUrl: "https://api.weather.gov/gridpoints/PDT/46,124/forecast"
-  },
-  {
-    number: "MER",
-    type: "aw",
-    name: "M. Feather - Devils Canyon",
-    description: "Length: 33 miles.",
-    min: 700,
-    max: 3000,
-    awLink:
-      "https://www.americanwhitewater.org/content/River/view/river-detail/193/main",
-    display: true,
-    weatherUrl: "https://api.weather.gov/gridpoints/STO/72,121/forecast"
   }
 ];
 
