@@ -234,6 +234,18 @@ export const defaultGauges: RiverInfo[] = [
     weatherUrl: "https://api.weather.gov/gridpoints/EKA/96,99/forecast"
   },
   {
+    number: "11266500",
+    name: "Merced - Briceburg",
+    description: "Length: 14 miles.",
+    min: 800,
+    max: 8000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/246/main",
+    type: "noaa",
+    display: true,
+    weatherUrl: "https://api.weather.gov/gridpoints/EKA/96,99/forecast"
+  },
+  {
     number: "loci1",
     type: "noaa",
     name: "Lochsa - Fish Creek",
