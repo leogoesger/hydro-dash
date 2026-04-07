@@ -218,7 +218,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 4500,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/279/main",
-    display: true,
+    display: false,
     weatherUrl: "https://api.weather.gov/gridpoints/MFR/79,32/forecast",
   },
   {
