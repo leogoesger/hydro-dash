@@ -39,7 +39,7 @@ export const Settings: FC<IProps> = ({ gauges, toggleGauge, resetGauges }) => {
                 key={g.number + idx}
                 control={
                   <Switch
-                    checked={g.display}
+                    checked={g.displayGauge}
                     onChange={() => toggleGauge(idx)}
                   />
                 }

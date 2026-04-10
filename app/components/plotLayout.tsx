@@ -59,7 +59,7 @@ export const PlotLayout = () => {
       >
         <Settings
           toggleGauge={toggleGauge}
-          gauges={gauges}
+          gauges={gauges.filter((g) => g.displayGauge)}
           resetGauges={resetGauges}
         />
         {gauges
