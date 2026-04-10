@@ -11,7 +11,7 @@ export interface RiverInfo {
   awLink: string;
   weatherUrl?: string;
   type: string;
-  display?: boolean;
+  displayGauge?: boolean;
 }
 
 // Readme:
@@ -26,7 +26,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 3000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/193/main",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/STO/72,121/forecast"
   },
   {
@@ -38,7 +38,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 2000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/196/main",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/STO/59,128/forecast"
   },
   {
@@ -50,7 +50,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 2000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/196/main",
-    display: true,
+    displayGauge: false,
     weatherUrl: "https://api.weather.gov/gridpoints/STO/59,128/forecast"
   },
   {
@@ -62,7 +62,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 2000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/196/main",
-    display: true,
+    displayGauge: false,
     weatherUrl: "https://api.weather.gov/gridpoints/STO/59,128/forecast"
   },
   {
@@ -75,7 +75,7 @@ export const defaultGauges: RiverInfo[] = [
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/322/main",
     weatherUrl: "https://api.weather.gov/gridpoints/REV/38,106/forecast",
-    display: true,
+    displayGauge: true,
   },
   {
     number: "FARC1",
@@ -87,7 +87,7 @@ export const defaultGauges: RiverInfo[] = [
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/322/main",
     weatherUrl: "https://api.weather.gov/gridpoints/REV/38,106/forecast",
-    display: true,
+    displayGauge: true,
   },
   {
     number: "NFDC1",
@@ -99,7 +99,7 @@ export const defaultGauges: RiverInfo[] = [
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/139/main",
     weatherUrl: "https://api.weather.gov/gridpoints/STO/65,85/forecast",
-    display: true,
+    displayGauge: true,
   },
   {
     number: "10",
@@ -110,7 +110,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 2000,
     awLink:
       "http://www.awetstate.com/SAmericanK.html",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/STO/72,121/forecast"
   },
   {
@@ -122,7 +122,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 20000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/148/main",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/STO/60,73/forecast",
   },
   {
@@ -134,7 +134,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 3000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/3232/main",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/STO/64,98/forecast",
   },
   {
@@ -146,7 +146,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 5000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/340/main",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/STO/75,107/forecast",
   },
   {
@@ -159,7 +159,7 @@ export const defaultGauges: RiverInfo[] = [
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/330/main",
     weatherUrl: "https://api.weather.gov/gridpoints/REV/48,59/forecast",
-    display: true,
+    displayGauge: true,
   },
   {
     number: "SEIC1",
@@ -171,7 +171,7 @@ export const defaultGauges: RiverInfo[] = [
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/234/main",
     weatherUrl: "https://api.weather.gov/gridpoints/MFR/83,52/forecast",
-    display: true,
+    displayGauge: true,
   },
   {
     number: "FTSC1",
@@ -183,7 +183,7 @@ export const defaultGauges: RiverInfo[] = [
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/183/main",
     weatherUrl: "https://api.weather.gov/gridpoints/EKA/74,78/forecast",
-    display: true,
+    displayGauge: true,
   },
   {
     number: "11355010",
@@ -194,7 +194,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 3000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/6799/main",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/STO/45,174/forecast"
   },
   {
@@ -206,7 +206,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 4500,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/11391/main",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/MFR/79,32/forecast"
   },
   {
@@ -218,7 +218,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 4500,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/279/main",
-    display: false,
+    displayGauge: false,
     weatherUrl: "https://api.weather.gov/gridpoints/MFR/79,32/forecast",
   },
   {
@@ -230,7 +230,7 @@ export const defaultGauges: RiverInfo[] = [
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/316/main",
     type: "usgs",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/EKA/96,99/forecast"
   },
   {
@@ -242,7 +242,7 @@ export const defaultGauges: RiverInfo[] = [
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/246/main",
     type: "noaa",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/EKA/96,99/forecast"
   },
   {
@@ -254,7 +254,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 25000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/570/main",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/MSO/56,110/forecast",
   },
   {
@@ -266,7 +266,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 12000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/4360/main",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/BOI/139,104/forecast",
   },
   {
@@ -279,7 +279,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 12000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/4360/main",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/BOI/139,104/forecast",
   },
   {
@@ -291,7 +291,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 3000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/592/main",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/BOI/139,104/forecast",
   },
   {
@@ -303,7 +303,7 @@ export const defaultGauges: RiverInfo[] = [
     max: 2500,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/592/main",
-    display: true,
+    displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/PDT/46,124/forecast"
   }
 ];

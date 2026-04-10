@@ -26,7 +26,7 @@ export const PlotLayout = () => {
 
   const toggleGauge = (gaugeIdx: number) => {
     const newGauges = [...gauges];
-    newGauges[gaugeIdx].display = !newGauges[gaugeIdx].display;
+    newGauges[gaugeIdx].displayGauge = !newGauges[gaugeIdx].displayGauge;
     setGauges(newGauges);
     localStorage.setItem("gauges", JSON.stringify(newGauges));
   };
@@ -63,7 +63,7 @@ export const PlotLayout = () => {
           resetGauges={resetGauges}
         />
         {gauges
-          .filter((g) => g.display)
+          .filter((g) => g.displayGauge)
           .map((gauge, idx) => (
             <FlowCard
               key={gauge.number + idx}
