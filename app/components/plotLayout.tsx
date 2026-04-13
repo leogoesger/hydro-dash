@@ -4,24 +4,25 @@ import { RiverInfo, defaultGauges } from "../gauges";
 import { Snackbar, Alert } from "@mui/material";
 import { FlowCard } from "./flowCard";
 
+const version = "1.0.0";
+
 export const PlotLayout = () => {
   const [gauges, setGauges] = useState<RiverInfo[]>([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(() => {
     const storedGauges = localStorage.getItem("gauges");
-    if (storedGauges) {
-      const storedGaugesJson = JSON.parse(storedGauges);
-      if (storedGaugesJson.length != defaultGauges.length) {
-        setGauges(defaultGauges);
-        localStorage.setItem("gauges", JSON.stringify(defaultGauges));
-      } else {
-        setGauges(storedGaugesJson);
-      }
+    const storedVersion = localStorage.getItem("version");
+    if (storedVersion !== version) {
+      setGauges(defaultGauges);
+      localStorage.setItem("gauges", JSON.stringify(defaultGauges));
+    } else if (storedGauges) {
+      setGauges(JSON.parse(storedGauges));
     } else {
       setGauges(defaultGauges);
       localStorage.setItem("gauges", JSON.stringify(defaultGauges));
     }
+    localStorage.setItem("version", version);
   }, []);
 
   const toggleGauge = (gaugeIdx: number) => {
@@ -83,7 +84,7 @@ export const getEmoji = (
   observedValue: number,
   predictedValues: number[] | null,
   min: number,
-  max: number
+  max: number,
 ) => {
   if (observedValue > max) {
     return "🤯";
@@ -104,7 +105,7 @@ export const getEmoji = (
 export const getFlowColor = (
   observedValue: number,
   min: number,
-  max: number
+  max: number,
 ) => {
   if (observedValue > max) {
     return "#f5db17ff"; // yellow
