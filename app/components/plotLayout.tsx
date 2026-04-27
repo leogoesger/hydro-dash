@@ -25,9 +25,13 @@ export const PlotLayout = () => {
     localStorage.setItem("version", version);
   }, []);
 
-  const toggleGauge = (gaugeIdx: number) => {
-    const newGauges = [...gauges];
-    newGauges[gaugeIdx].displayGauge = !newGauges[gaugeIdx].displayGauge;
+  const toggleGauge = (gaugeName: string) => {
+    console.log("Toggling gauge:", gaugeName);
+    const newGauges = gauges.map((g) =>
+      g.name === gaugeName
+        ? { ...g, displayGauge: !g.displayGauge }
+        : g
+    );
     setGauges(newGauges);
     localStorage.setItem("gauges", JSON.stringify(newGauges));
   };
@@ -65,13 +69,13 @@ export const PlotLayout = () => {
         />
         {gauges
           .filter((g) => g.displayGauge)
-          .map((gauge, idx) => (
+          .map((gauge) => (
             <FlowCard
-              key={gauge.number + idx}
+              key={gauge.number}
               gauge={gauge}
               toggleGauge={() => {
                 setSnackbarOpen(true);
-                toggleGauge(idx);
+                toggleGauge(gauge.name);
               }}
             />
           ))}

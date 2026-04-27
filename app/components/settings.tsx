@@ -12,7 +12,7 @@ import { RiverInfo } from "../gauges";
 
 interface IProps {
   gauges: RiverInfo[];
-  toggleGauge: (gaugeIdx: number) => void;
+  toggleGauge: (gaugeNumber: string) => void;
   resetGauges: () => void;
 }
 
@@ -33,14 +33,14 @@ export const Settings: FC<IProps> = ({ gauges, toggleGauge, resetGauges }) => {
       </Button>
       <Drawer open={open} onClose={() => toggleDrawer(false)} anchor="right">
         <FormGroup style={{ padding: "0.7rem" }}>
-          {gauges.map((g, idx) => {
+          {gauges.map((g) => {
             return (
               <FormControlLabel
-                key={g.number + idx}
+                key={g.number}
                 control={
                   <Switch
                     checked={g.displayGauge}
-                    onChange={() => toggleGauge(idx)}
+                    onChange={() => toggleGauge(g.name)}
                   />
                 }
                 label={g.name}
