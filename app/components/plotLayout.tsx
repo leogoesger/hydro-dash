@@ -3,8 +3,7 @@ import { Settings } from "./settings";
 import { RiverInfo, defaultGauges } from "../gauges";
 import { Snackbar, Alert } from "@mui/material";
 import { FlowCard } from "./flowCard";
-
-const version = "1.0.0";
+import { version } from "../version";
 
 export const PlotLayout = () => {
   const [gauges, setGauges] = useState<RiverInfo[]>([]);

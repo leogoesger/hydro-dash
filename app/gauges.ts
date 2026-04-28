@@ -305,6 +305,18 @@ export const defaultGauges: RiverInfo[] = [
       "https://www.americanwhitewater.org/content/River/view/river-detail/592/main",
     displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/PDT/46,124/forecast"
+  },
+  {
+    number: "03070260",
+    type: "noaa",
+    name: "Cheat",
+    description: "Length: 11 miles.",
+    min: 1000,
+    max: 7000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/2347/main",
+    displayGauge: true,
+    weatherUrl: "https://api.weather.gov/gridpoints/PDT/46,124/forecast"
   }
 ];
 
