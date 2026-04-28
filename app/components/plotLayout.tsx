@@ -12,7 +12,21 @@ export const PlotLayout = () => {
   useEffect(() => {
     const storedGauges = localStorage.getItem("gauges");
     const storedVersion = localStorage.getItem("version");
-    if (storedVersion !== version) {
+    if (storedVersion !== version && storedGauges) {
+      // compare stored gauge with default gauge, create a new gauge list with the same displayGauge value as the stored gauge but with the new gauge info from the default gauge
+      const storedGaugesParsed = JSON.parse(storedGauges) as RiverInfo[];
+      const newGauges = defaultGauges.map((defaultGauge) => {
+        const storedGauge = storedGaugesParsed.find(
+          (g) => g.name === defaultGauge.name
+        );
+        return {
+          ...defaultGauge,
+          displayGauge: storedGauge ? storedGauge.displayGauge : defaultGauge.displayGauge,
+        };
+      });
+      setGauges(newGauges);
+      localStorage.setItem("gauges", JSON.stringify(newGauges));
+    } else if (storedVersion !== version) {
       setGauges(defaultGauges);
       localStorage.setItem("gauges", JSON.stringify(defaultGauges));
     } else if (storedGauges) {
