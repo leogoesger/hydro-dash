@@ -37,38 +37,68 @@ interface IProps {
   toggleGauge?: () => void;
 }
 
+export const getGaugeInfo = async (gaugeNumber: string) => {
+  const response = await fetch(
+    `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${gaugeNumber}&siteStatus=all&period=P7D`,
+  );
+  const data: UsgsResponse = await response.json();
+
+  const x: string[] = [];
+  const y: number[] = [];
+
+  data.value.timeSeries
+    .filter(({ variable }) => variable.unit.unitCode === "ft3/s")
+    .forEach((item) => {
+      item.values.forEach((valuesItem) => {
+        valuesItem.value.forEach((valueItem) => {
+          x.push(valueItem.dateTime);
+          y.push(parseFloat(valueItem.value));
+        });
+      });
+    });
+
+  return {
+    observedX: x,
+    observedY: y,
+  };
+};
+
 export const UsgsCard: FC<IProps> = ({ gauge, toggleGauge }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [observedX, setObservedX] = useState<string[]>([]);
   const [observedY, setObservedY] = useState<number[]>([]);
 
+  const refreshData = async () => {
+    try {
+      setIsLoading(true);
+      const data = await getGaugeInfo(gauge.number);
+      setObservedX(data.observedX);
+      setObservedY(data.observedY);
+      setIsLoading(false);
+    } catch (e) {
+      console.error("Error fetching USGS data:", e);
+      setIsLoading(false);
+      setIsError(true);
+    }
+  };
+
   useEffect(() => {
-    fetch(
-      `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${gauge.number}&siteStatus=all&period=P7D`
-    )
-      .then((res) => res.json())
-      .then((d: UsgsResponse) => {
-        const x: string[] = [];
-        const y: number[] = [];
-        d.value.timeSeries
-          .filter(({ variable }) => variable.unit.unitCode === "ft3/s")
-          .forEach((item) => {
-            item.values.forEach((valuesItem) => {
-              valuesItem.value.forEach((valueItem) => {
-                x.push(valueItem.dateTime);
-                y.push(parseFloat(valueItem.value));
-              });
-            });
-          });
-        setObservedX(x);
-        setObservedY(y);
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const data = await getGaugeInfo(gauge.number);
+        setObservedX(data.observedX);
+        setObservedY(data.observedY);
         setIsLoading(false);
-      })
-      .catch(() => {
+      } catch (e) {
+        console.error("Error fetching USGS data:", e);
         setIsLoading(false);
         setIsError(true);
-      });
+      }
+    };
+
+    fetchData();
   }, [gauge?.number]);
 
   if (gauge == null) {
@@ -79,6 +109,7 @@ export const UsgsCard: FC<IProps> = ({ gauge, toggleGauge }) => {
       gauge={gauge}
       observedX={observedX}
       observedY={observedY}
+      refreshData={refreshData}
       toggleGauge={toggleGauge}
       isLoading={isLoading}
       isError={isError}

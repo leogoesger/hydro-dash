@@ -154,8 +154,8 @@ export const defaultGauges: RiverInfo[] = [
     type: "noaa",
     name: "W. Walker - 395",
     description: "",
-    min: 300,
-    max: 2000,
+    min: 700,
+    max: 1600,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/330/main",
     weatherUrl: "https://api.weather.gov/gridpoints/REV/48,59/forecast",

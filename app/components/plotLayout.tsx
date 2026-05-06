@@ -7,7 +7,7 @@ import { version } from "../version";
 
 export const PlotLayout = () => {
   const [gauges, setGauges] = useState<RiverInfo[]>([]);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMsg, setSnackbarMsg] = useState<string>("");
 
   useEffect(() => {
     const storedGauges = localStorage.getItem("gauges");
@@ -58,17 +58,17 @@ export const PlotLayout = () => {
     <>
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        open={snackbarOpen}
-        onClose={() => setSnackbarOpen(false)}
+        open={!!snackbarMsg}
+        onClose={() => setSnackbarMsg("")}
         autoHideDuration={2000}
         style={{ width: "350px" }}
       >
         <Alert
-          onClose={() => setSnackbarOpen(false)}
+          onClose={() => setSnackbarMsg("")}
           severity="warning"
           sx={{ width: "65%" }}
         >
-          Toggle Gauge 👉
+          {snackbarMsg}
         </Alert>
       </Snackbar>
       <main
@@ -84,10 +84,10 @@ export const PlotLayout = () => {
           .filter((g) => g.displayGauge)
           .map((gauge) => (
             <FlowCard
-              key={gauge.number}
+              key={gauge.name}
               gauge={gauge}
               toggleGauge={() => {
-                setSnackbarOpen(true);
+                setSnackbarMsg("Toggle Gauge 👉");
                 toggleGauge(gauge.name);
               }}
             />

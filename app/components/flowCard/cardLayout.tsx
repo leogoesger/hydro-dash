@@ -1,4 +1,4 @@
-import { ExpandMore, VisibilityOff } from "@mui/icons-material";
+import { ExpandMore, VisibilityOff, Refresh } from "@mui/icons-material";
 import {
   Accordion,
   AccordionActions,
@@ -23,6 +23,7 @@ interface IProps {
   forecastedX?: string[];
   forecastedY?: number[];
   toggleGauge?: () => void;
+  refreshData?: () => void;
   isLoading?: boolean;
   isError?: boolean;
 }
@@ -34,6 +35,7 @@ export const CardLayout: FC<IProps> = ({
   forecastedX,
   forecastedY,
   toggleGauge,
+  refreshData,
   isLoading = false,
   isError = false,
 }) => {
@@ -48,7 +50,12 @@ export const CardLayout: FC<IProps> = ({
     },
   ];
 
-  if (forecastedX && forecastedX.length > 0 && forecastedY && forecastedY.length > 0) {
+  if (
+    forecastedX &&
+    forecastedX.length > 0 &&
+    forecastedY &&
+    forecastedY.length > 0
+  ) {
     data.push({
       x: forecastedX,
       y: forecastedY,
@@ -89,13 +96,13 @@ export const CardLayout: FC<IProps> = ({
                 observedY[observedY.length - 1],
                 forecastedY || null,
                 gauge.min,
-                gauge.max
+                gauge.max,
               )}{" "}
           {isError
             ? "Cannot load gauge"
             : isLoading
-            ? "Loading ..."
-            : gauge.name}
+              ? "Loading ..."
+              : gauge.name}
         </div>
       </AccordionSummary>
       <AccordionDetails style={{ position: "relative" }}>
@@ -117,12 +124,16 @@ export const CardLayout: FC<IProps> = ({
             },
             yaxis: {
               gridcolor: "grey",
-              tickformat: '.0f'
-            }
+              tickformat: ".0f",
+            },
           }}
         />
         {observedY && observedY.length > 0 && (
-          <CurrentFlow  observedDate={observedX[observedX.length - 1]} observedValue={observedY[observedY.length - 1]}  gauge={gauge} />
+          <CurrentFlow
+            observedDate={observedX[observedX.length - 1]}
+            observedValue={observedY[observedY.length - 1]}
+            gauge={gauge}
+          />
         )}
       </AccordionDetails>
       <AccordionActions>
@@ -133,18 +144,22 @@ export const CardLayout: FC<IProps> = ({
             width: "100%",
           }}
         >
-          {toggleGauge != null && (
-            <Button onClick={toggleGauge} color="secondary">
-              <VisibilityOff />
-            </Button>
-          )}
-
           <div>
-            {/* <WeatherButton riverData={gauge} /> */} 
-            <Button onClick={() => window.open(gauge.awLink, "_blank")}>
+            {toggleGauge != null && (
+              <Button onClick={toggleGauge} color="secondary">
+                <VisibilityOff />
+              </Button>
+            )}
+            <Button
+              color="secondary"
+              onClick={() => window.open(gauge.awLink, "_blank")}
+            >
               <b>AW</b>
             </Button>
           </div>
+          <Button onClick={refreshData}>
+            <Refresh />
+          </Button>
         </div>
       </AccordionActions>
     </Accordion>

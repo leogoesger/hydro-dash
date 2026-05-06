@@ -20,44 +20,74 @@ export interface CdecResult {
   units: string;
 }
 
+export const getGaugeInfo = async (gaugeNumber: string) => {
+  const response = await fetch("https://foodnome.com/api/proxy/cdec", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      station: gaugeNumber,
+      start: moment().subtract(5, "days").format("YYYY-MM-DD"),
+    }),
+  });
+
+  const data: CdecResult[] = await response.json();
+
+  const x: string[] = [];
+  const y: number[] = [];
+
+  data.forEach((item) => {
+    if (item.value >= 0) {
+      x.push(item.obsDate);
+      y.push(Math.trunc(item.value));
+    }
+  });
+
+  console.log("CDEC data for station", gaugeNumber, { x, y });
+
+  return {
+    observedX: x,
+    observedY: y,
+  };
+};
+
 export const CdecCard: FC<IProps> = ({ gauge, toggleGauge }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [observedX, setObservedX] = useState<string[]>([]);
   const [observedY, setObservedY] = useState<number[]>([]);
 
-  useEffect(() => {
-    fetch("https://foodnome.com/api/proxy/cdec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        station: gauge.number,
-        start: moment().subtract(5, "days").format("YYYY-MM-DD"),
-      }),
-    })
-      .then((res) => res.json())
-      .then((d: CdecResult[]) => {
-        const x: string[] = [];
-        const y: number[] = [];
-
-        d.forEach((item) => {
-          if (item.value >= 0) {
-            x.push(item.obsDate);
-            y.push(Math.trunc(item.value));
-          }
-        });
-        console.log("CDEC data for station", gauge.number, { x, y });
-        setObservedX(x);
-        setObservedY(y);
+  const refreshData = async () => {
+    try {
+        setIsLoading(true);
+        const data = await getGaugeInfo(gauge.number);
+        setObservedX(data.observedX);
+        setObservedY(data.observedY);
         setIsLoading(false);
-      })
-      .catch((e) => {
+    } catch (e) {
         console.error("Error fetching CDEC data:", e);
         setIsLoading(false);
         setIsError(true);
-      });
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const data = await getGaugeInfo(gauge.number);
+        setObservedX(data.observedX);
+        setObservedY(data.observedY);
+        setIsLoading(false);
+      } catch (e) {
+        console.error("Error fetching CDEC data:", e);
+        setIsLoading(false);
+        setIsError(true);
+      }
+    };
+
+    fetchData();
   }, [gauge?.number]);
 
   return (
@@ -65,6 +95,7 @@ export const CdecCard: FC<IProps> = ({ gauge, toggleGauge }) => {
       gauge={gauge}
       observedX={observedX}
       observedY={observedY}
+      refreshData={refreshData}
       toggleGauge={toggleGauge}
       isLoading={isLoading}
       isError={isError}
