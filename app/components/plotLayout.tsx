@@ -30,7 +30,18 @@ export const PlotLayout = () => {
       setGauges(defaultGauges);
       localStorage.setItem("gauges", JSON.stringify(defaultGauges));
     } else if (storedGauges) {
-      setGauges(JSON.parse(storedGauges));
+      // if the version is the same, use the stored gauge info but update the gauge info with the default gauge info
+      const storedGaugesParsed = JSON.parse(storedGauges) as RiverInfo[];
+      const newGauges = defaultGauges.map((defaultGauge) => {
+        const storedGauge = storedGaugesParsed.find(
+          (g: RiverInfo) => g.name === defaultGauge.name
+        );
+        return {
+          ...defaultGauge,
+          displayGauge: storedGauge ? storedGauge.displayGauge : defaultGauge.displayGauge,
+        };
+      });
+      setGauges(newGauges);
     } else {
       setGauges(defaultGauges);
       localStorage.setItem("gauges", JSON.stringify(defaultGauges));

@@ -44,8 +44,6 @@ export const getGaugeInfo = async (gaugeNumber: string) => {
     }
   });
 
-  console.log("CDEC data for station", gaugeNumber, { x, y });
-
   return {
     observedX: x,
     observedY: y,
