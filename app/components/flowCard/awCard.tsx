@@ -34,7 +34,14 @@ export const getGaugeInfo = async (gaugeNumber: string, gaugeSource: string) => 
 
   // API returns data in descending order (newest first), but we need ascending order (oldest first)
   data.forEach((item) => {
-    x.push(item.dateTime);
+    // Convert UTC datetime to local time string (removing Z to make Plotly treat it as local time)
+    const utcDate = new Date(item.dateTime);
+    // Format as ISO string but remove the Z to indicate local time
+    const localDateTime = new Date(utcDate.getTime() - utcDate.getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, -1);
+    
+    x.push(localDateTime);
     y.push(parseFloat(item.value));
   });
 
