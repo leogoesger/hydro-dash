@@ -32,10 +32,15 @@ export const getGaugeInfo = async (gaugeNumber: string, gaugeSource: string) => 
   const x: string[] = [];
   const y: number[] = [];
 
+  // API returns data in descending order (newest first), but we need ascending order (oldest first)
   data.forEach((item) => {
     x.push(item.dateTime);
     y.push(parseFloat(item.value));
   });
+
+  // Reverse arrays so newest data is at the end
+  x.reverse();
+  y.reverse();
 
   return {
     observedX: x,
