@@ -36,7 +36,7 @@ export const Settings: FC<IProps> = ({ gauges, toggleGauge, resetGauges }) => {
           {gauges.map((g) => {
             return (
               <FormControlLabel
-                key={g.number}
+                key={g.name}
                 control={
                   <Switch
                     checked={g.displayGauge}

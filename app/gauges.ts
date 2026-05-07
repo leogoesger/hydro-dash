@@ -12,6 +12,7 @@ export interface RiverInfo {
   weatherUrl?: string;
   type: string;
   displayGauge?: boolean;
+  gaugeSource?: string;
 }
 
 // Readme:
@@ -162,6 +163,44 @@ export const defaultGauges: RiverInfo[] = [
     displayGauge: true,
   },
   {
+    number: "11266500",
+    name: "Merced - Briceburg",
+    description: "Length: 14 miles.",
+    min: 800,
+    max: 8000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/246/main",
+    type: "noaa",
+    displayGauge: true,
+    weatherUrl: "https://api.weather.gov/gridpoints/EKA/96,99/forecast"
+  },
+  {
+    number: "35795422",
+    name: "Tuolumne - Cherry Creek",
+    description: "Length: 7.7 miles.",
+    min: 600,
+    max: 2000,
+    awLink:
+      "http://www.awetstate.com/TuolumneCC.html",
+    type: "aw",
+    displayGauge: true,
+    weatherUrl: "https://api.weather.gov/gridpoints/EKA/96,99/forecast",
+    gaugeSource: "CALCULATED"
+  },
+  {
+    number: "MBT",
+    name: "Tiger Creek",
+    description: "Length: 3 miles.",
+    min: 400,
+    max: 3000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/255/main",
+    type: "aw",
+    displayGauge: true,
+    weatherUrl: "https://api.weather.gov/gridpoints/EKA/96,99/forecast",
+    gaugeSource: "CDEC"
+  },
+  {
     number: "SEIC1",
     type: "noaa",
     name: "Klamath - Happy Camp",
@@ -186,8 +225,8 @@ export const defaultGauges: RiverInfo[] = [
     displayGauge: true,
   },
   {
-    number: "11355010",
-    type: "usgs",
+    number: "P1U",
+    type: "aw",
     name: "Pit 1",
     description: "",
     min: 600,
@@ -195,6 +234,7 @@ export const defaultGauges: RiverInfo[] = [
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/6799/main",
     displayGauge: true,
+    gaugeSource: "CDEC",
     weatherUrl: "https://api.weather.gov/gridpoints/STO/45,174/forecast"
   },
   {
@@ -230,18 +270,6 @@ export const defaultGauges: RiverInfo[] = [
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/316/main",
     type: "usgs",
-    displayGauge: true,
-    weatherUrl: "https://api.weather.gov/gridpoints/EKA/96,99/forecast"
-  },
-  {
-    number: "11266500",
-    name: "Merced - Briceburg",
-    description: "Length: 14 miles.",
-    min: 800,
-    max: 8000,
-    awLink:
-      "https://www.americanwhitewater.org/content/River/view/river-detail/246/main",
-    type: "noaa",
     displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/EKA/96,99/forecast"
   },

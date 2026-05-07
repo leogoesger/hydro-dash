@@ -85,6 +85,7 @@ export const PlotLayout = () => {
           .map((gauge) => (
             <FlowCard
               key={gauge.name}
+              name={gauge.name}
               gauge={gauge}
               toggleGauge={() => {
                 setSnackbarMsg("Toggle Gauge 👉");
