@@ -10,7 +10,6 @@ import { FC } from "react";
 import dynamic from "next/dynamic";
 import { Data } from "plotly.js";
 import { CurrentFlow } from "./currentFlow";
-// import { WeatherButton } from "../weather";
 import { RiverInfo } from "../../gauges";
 import { getEmoji } from "../plotLayout";
 
@@ -118,9 +117,18 @@ export const CardLayout: FC<IProps> = ({
             width: 300,
             height: 250,
             xaxis: {
-              tickformat: "%m/%d",
               hoverformat: "%m/%d %H:%M",
               nticks: 5,
+              tickformatstops: [
+                {
+                  dtickrange: [null, 86400000], // Less than 1 day - show hours
+                  value: "%H:%M",
+                },
+                {
+                  dtickrange: [86400000, null], // 1 day or more - show month/day
+                  value: "%m/%d",
+                },
+              ],
             },
             yaxis: {
               gridcolor: "grey",
