@@ -21,7 +21,7 @@ export const GaugeDrawer: FC<IProps> = ({ riverData, clearRiverData }) => {
         />
 
         <div style={{ marginTop: "1rem" }}>
-          {riverData && <FlowCard key={riverData.number} gauge={riverData} />}
+          {riverData && <FlowCard name={riverData.number} gauge={riverData} />}
         </div>
       </div>
       <Button
