@@ -38,13 +38,6 @@ export const CardLayout: FC<IProps> = ({
   isLoading = false,
   isError = false,
 }) => {
-  // Calculate time range to determine appropriate tick format
-  const allX = [...observedX, ...(forecastedX || [])];
-  const timeRangeMs = allX.length > 1 
-    ? new Date(allX[allX.length - 1]).getTime() - new Date(allX[0]).getTime()
-    : 0;
-  const timeRangeDays = timeRangeMs / (1000 * 60 * 60 * 24);
-  
   const data: Data[] = [
     {
       x: observedX,
@@ -126,7 +119,16 @@ export const CardLayout: FC<IProps> = ({
             xaxis: {
               hoverformat: "%m/%d %H:%M",
               nticks: 5,
-              tickformat: timeRangeDays < 1.5 ? "%H:%M" : "%m/%d",
+              tickformatstops: [
+                {
+                  dtickrange: [null, 8640000], // Less than 1 day in ms
+                  value: "%H:%M"
+                },
+                {
+                  dtickrange: [8640000, null], // 1 day or more
+                  value: "%m/%d"
+                }
+              ],
             },
             yaxis: {
               gridcolor: "grey",
