@@ -9,7 +9,11 @@ interface IProps {
   gauge: RiverInfo;
 }
 
-export const CurrentFlow: FC<IProps> = ({ observedDate, observedValue, gauge }) => {
+export const CurrentFlow: FC<IProps> = ({
+  observedDate,
+  observedValue,
+  gauge,
+}) => {
   return (
     <div style={{ fontSize: "0.9rem", color: "grey", position: "absolute" }}>
       <span
@@ -18,7 +22,9 @@ export const CurrentFlow: FC<IProps> = ({ observedDate, observedValue, gauge }) 
           fontWeight: "bold",
         }}
       >
-        {Math.round(observedValue).toString()}cfs
+        {gauge.useGaugeHeight
+          ? observedValue.toString() + "ft"
+          : Math.round(observedValue).toString() + "cfs"}
       </span>{" "}
       {moment(observedDate).fromNow()}
     </div>

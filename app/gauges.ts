@@ -13,6 +13,7 @@ export interface RiverInfo {
   type: string;
   displayGauge?: boolean;
   gaugeSource?: string;
+  useGaugeHeight?: boolean;
 }
 
 // Readme:
@@ -336,6 +337,31 @@ export const defaultGauges: RiverInfo[] = [
     weatherUrl: "https://api.weather.gov/gridpoints/PDT/46,124/forecast"
   },
   {
+    number: "03075500",
+    type: "noaa",
+    name: "Top Yough",
+    description: "Length: 2.8 miles.",
+    min: 200,
+    max: 1000,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/754/main",
+    displayGauge: true,
+    weatherUrl: "https://api.weather.gov/gridpoints/PDT/46,124/forecast",
+  },
+  {
+    number: "03070500",
+    type: "noaa",
+    name: "Lower Big Sandy",
+    description: "Length: 5.1 miles.",
+    min: 5,
+    max: 8,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/2331/main",
+    displayGauge: true,
+    weatherUrl: "https://api.weather.gov/gridpoints/PDT/46,124/forecast",
+    useGaugeHeight: true,
+  },
+  {
     number: "03070260",
     type: "noaa",
     name: "Cheat",
@@ -346,6 +372,19 @@ export const defaultGauges: RiverInfo[] = [
       "https://www.americanwhitewater.org/content/River/view/river-detail/2347/main",
     displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/PDT/46,124/forecast"
+  },
+  {
+    number: "01646500",
+    type: "noaa",
+    name: "Great Falls",
+    description: "Length: 10 miles.",
+    min: 2.8,
+    max: 5,
+    awLink:
+      "https://www.americanwhitewater.org/content/River/view/river-detail/5564/main",
+    displayGauge: true,
+    weatherUrl: "https://api.weather.gov/gridpoints/PDT/46,124/forecast",
+    useGaugeHeight: true,
   }
 ];
 

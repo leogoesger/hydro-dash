@@ -132,7 +132,7 @@ export const CardLayout: FC<IProps> = ({
             },
             yaxis: {
               gridcolor: "grey",
-              tickformat: ".0f",
+              tickformat: gauge.useGaugeHeight ? ".2f" : ".0f",
             },
           }}
         />
