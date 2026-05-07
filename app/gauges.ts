@@ -20,7 +20,7 @@ export interface RiverInfo {
 export const defaultGauges: RiverInfo[] = [
   {
     number: "MER",
-    type: "cdec",
+    type: "aw",
     name: "M. Feather - Devils Canyon",
     description: "Length: 33 miles.",
     min: 700,
@@ -28,7 +28,8 @@ export const defaultGauges: RiverInfo[] = [
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/193/main",
     displayGauge: true,
-    weatherUrl: "https://api.weather.gov/gridpoints/STO/72,121/forecast"
+    weatherUrl: "https://api.weather.gov/gridpoints/STO/72,121/forecast",
+    gaugeSource: "CDEC"
   },
   {
     number: "NFEC1",
