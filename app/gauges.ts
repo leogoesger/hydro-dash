@@ -5,6 +5,7 @@ import { UsgsResponse } from "./components/flowCard/usgsCard";
 export interface RiverInfo {
   number: string;
   name: string;
+  region: string;
   description: string;
   min: number;
   max: number;
@@ -12,9 +13,12 @@ export interface RiverInfo {
   weatherUrl?: string;
   type: string;
   displayGauge?: boolean;
+  hideInSettings?: boolean;
   gaugeSource?: string;
   useGaugeHeight?: boolean;
 }
+
+export const regions = ["N. Sierra", "Central Sierra", "NorCal", "Idaho", "Oregon", "East Coast"];
 
 // Readme:
 // The way to get weather url is through `https://api.weather.gov/points/39.851,-120.902`, and it will return forecast url in the properties.forecast field.
@@ -22,12 +26,13 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "MER",
     type: "aw",
-    name: "M. Feather - Devils Canyon",
+    name: "M. Feather",
     description: "Length: 33 miles.",
     min: 700,
     max: 3000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/193/main",
+    region: "N. Sierra",
     displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/STO/72,121/forecast",
     gaugeSource: "CDEC"
@@ -39,6 +44,7 @@ export const defaultGauges: RiverInfo[] = [
     description: "Length: 3.8 miles.",
     min: 400,
     max: 2000,
+    region: "N. Sierra",
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/196/main",
     displayGauge: true,
@@ -48,8 +54,10 @@ export const defaultGauges: RiverInfo[] = [
     number: "NFEC1",
     type: "noaa",
     name: "N. Feather - Tobin",
+    hideInSettings: true,
     description: "Length: 1.3 miles.",
     min: 400,
+    region: "N. Sierra",
     max: 2000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/196/main",
@@ -60,6 +68,8 @@ export const defaultGauges: RiverInfo[] = [
     number: "NFEC1",
     type: "noaa",
     name: "N. Feather - Lobin",
+    hideInSettings: true,
+    region: "N. Sierra",
     description: "Length: 2.7 miles.",
     min: 400,
     max: 2000,
@@ -72,6 +82,7 @@ export const defaultGauges: RiverInfo[] = [
     number: "TRRN2",
     type: "noaa",
     name: "Truckee - Reno",
+    region: "N. Sierra",
     description: "",
     min: 300,
     max: 6000,
@@ -84,6 +95,7 @@ export const defaultGauges: RiverInfo[] = [
     number: "FARC1",
     type: "noaa",
     name: "Truckee - Farad",
+    region: "N. Sierra",
     description: "",
     min: 300,
     max: 6000,
@@ -95,8 +107,9 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "NFDC1",
     type: "noaa",
-    name: "N. American - Chamberlain",
+    name: "N. American - Chamby",
     description: "Length: 4.8 miles.",
+    region: "N. Sierra",
     min: 300,
     max: 10000,
     awLink:
@@ -108,6 +121,7 @@ export const defaultGauges: RiverInfo[] = [
     number: "10",
     type: "eid",
     name: "S. American - Kyburz",
+    region: "N. Sierra",
     description: "Length: 7.5 miles.",
     min: 800,
     max: 2000,
@@ -119,6 +133,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "cbac1",
     type: "noaa",
+    region: "N. Sierra",
     name: "S. American - Chili Bar",
     description: "",
     min: 800,
@@ -131,6 +146,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "JNSC1",
     type: "noaa",
+    region: "N. Sierra",
     name: "S. Yuba - E to P",
     description: "",
     min: 400,
@@ -143,7 +159,8 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "GYRC1",
     type: "noaa",
-    name: "N. Yuba - Goodyears Bar",
+    region: "N. Sierra",
+    name: "N. Yuba - Goodyears",
     description: "",
     min: 800,
     max: 5000,
@@ -155,6 +172,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "10296000",
     type: "noaa",
+    region: "N. Sierra",
     name: "W. Walker - 395",
     description: "",
     min: 700,
@@ -167,6 +185,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "11266500",
     name: "Merced - Briceburg",
+    region: "Central Sierra",
     description: "Length: 14 miles.",
     min: 800,
     max: 8000,
@@ -179,6 +198,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "35795422",
     name: "Tuolumne - Cherry Creek",
+    region: "Central Sierra",
     description: "Length: 7.7 miles.",
     min: 600,
     max: 2000,
@@ -192,6 +212,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "MBT",
     name: "Tiger Creek",
+    region: "Central Sierra",
     description: "Length: 3 miles.",
     min: 400,
     max: 3000,
@@ -205,6 +226,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "SEIC1",
     type: "noaa",
+    region: "NorCal",
     name: "Klamath - Happy Camp",
     description: "",
     min: 700,
@@ -217,6 +239,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "FTSC1",
     type: "noaa",
+    region: "NorCal",
     name: "Eel - Fort Seward",
     description: "",
     min: 500,
@@ -230,6 +253,7 @@ export const defaultGauges: RiverInfo[] = [
     number: "P1U",
     type: "aw",
     name: "Pit 1",
+    region: "NorCal",
     description: "",
     min: 600,
     max: 3000,
@@ -242,6 +266,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "SBRC1",
     type: "noaa",
+    region: "NorCal",
     name: "Salmon - Butler",
     description: "Length: 4 miles.",
     min: 1200,
@@ -254,6 +279,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "SBRC1",
     type: "noaa",
+    region: "NorCal",
     name: "Salmon - Nordheimer",
     description: "Length: 6.5 miles.",
     min: 1200,
@@ -266,6 +292,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "11527000",
     name: "Trinity - Pigeon Point",
+    region: "NorCal",
     description: "Length: 5.5 miles.",
     min: 500,
     max: 40000,
@@ -278,6 +305,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "loci1",
     type: "noaa",
+    region: "Idaho",
     name: "Lochsa - Fish Creek",
     description: "Length: 12 miles.",
     min: 1200,
@@ -290,6 +318,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "13247500",
     type: "noaa",
+    region: "Idaho",
     name: "Payette - Upper Main",
     description: "Length: 7 miles.",
     min: 800,
@@ -302,6 +331,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "13247500",
     type: "noaa",
+    region: "Idaho",
     name: "S. Payette - Staircase",
     description:
       "<b>Gauge is for Upper Main Payette, not Staircase. Estimation can by done by subtracting the NF Payette at Banks from the Main Fork at Horseshoe Bend.</b> <br>Length: 5 miles.",
@@ -315,7 +345,8 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "13246000",
     type: "noaa",
-    name: "N. Payette - The North Fork",
+    region: "Idaho",
+    name: "N. Payette",
     description: "Length: 16 miles.",
     min: 400,
     max: 3000,
@@ -327,6 +358,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "14123500",
     type: "noaa",
+    region: "Oregon",
     name: "White Salmon",
     description: "Length: 4.5 miles.",
     min: 450,
@@ -339,6 +371,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "03075500",
     type: "noaa",
+    region: "East Coast",
     name: "Top Yough",
     description: "Length: 2.8 miles.",
     min: 200,
@@ -351,6 +384,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "03070500",
     type: "noaa",
+    region: "East Coast",
     name: "Lower Big Sandy",
     description: "Length: 5.1 miles.",
     min: 5,
@@ -364,6 +398,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "03070260",
     type: "noaa",
+    region: "East Coast",
     name: "Cheat",
     description: "Length: 11 miles.",
     min: 1000,
@@ -376,6 +411,7 @@ export const defaultGauges: RiverInfo[] = [
   {
     number: "01646500",
     type: "noaa",
+    region: "East Coast",
     name: "Great Falls",
     description: "Length: 10 miles.",
     min: 2.8,

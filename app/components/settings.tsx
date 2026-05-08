@@ -5,10 +5,11 @@ import {
   FormGroup,
   FormControlLabel,
   Switch,
+  Divider
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { yellow } from "@mui/material/colors";
-import { RiverInfo } from "../gauges";
+import { regions, RiverInfo } from "../gauges";
 
 interface IProps {
   gauges: RiverInfo[];
@@ -33,18 +34,30 @@ export const Settings: FC<IProps> = ({ gauges, toggleGauge, resetGauges }) => {
       </Button>
       <Drawer open={open} onClose={() => toggleDrawer(false)} anchor="right">
         <FormGroup style={{ padding: "0.7rem" }}>
-          {gauges.map((g) => {
+          {regions.map((region) => {
             return (
-              <FormControlLabel
-                key={g.name}
-                control={
-                  <Switch
-                    checked={g.displayGauge}
-                    onChange={() => toggleGauge(g.name)}
-                  />
-                }
-                label={g.name}
-              />
+              <div key={region} style={{ display: "flex", flexDirection: "column" }}>
+                <h3 style={{ margin: "0.5rem 0", color: "#ffcc02" }}>
+                  <b>{region}</b>
+                </h3>
+                <Divider/>
+                {gauges
+                  .filter((g) => g.region === region && !g.hideInSettings)
+                  .map((g) => {
+                    return (
+                      <FormControlLabel
+                        key={g.name}
+                        control={
+                          <Switch
+                            checked={g.displayGauge}
+                            onChange={() => toggleGauge(g.name)}
+                          />
+                        }
+                        label={g.name}
+                      />
+                    );
+                  })}
+              </div>
             );
           })}
         </FormGroup>
