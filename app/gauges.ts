@@ -222,13 +222,27 @@ export const defaultGauges: RiverInfo[] = [
   },
   {
     number: "MBT",
-    name: "Tiger Creek",
+    name: "N. Moke - Tiger",
     region: "Central Sierra",
     description: "Length: 3 miles.",
     min: 400,
     max: 3000,
     awLink:
       "https://www.americanwhitewater.org/content/River/view/river-detail/255/main",
+    type: "aw",
+    displayGauge: true,
+    weatherUrl: "https://api.weather.gov/gridpoints/EKA/96,99/forecast",
+    gaugeSource: "CDEC"
+  },
+  {
+    number: "M11",
+    name: "N. Moke - Devil's",
+    region: "Central Sierra",
+    description: "Length: 14 miles.",
+    min: 500,
+    max: 2200,
+    awLink:
+      "http://www.awetstate.com/NMokDN.html",
     type: "aw",
     displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/EKA/96,99/forecast",
