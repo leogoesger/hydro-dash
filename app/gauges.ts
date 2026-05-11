@@ -144,6 +144,17 @@ export const defaultGauges: RiverInfo[] = [
     weatherUrl: "https://api.weather.gov/gridpoints/STO/60,73/forecast",
   },
   {
+    number: "SUMMIT", // Can be any identifier
+    type: "summit",
+    name: "S. Yuba - Summit",
+    description: "SUAC1 - FOCC1",
+    min: 0,
+    max: 1000,
+    awLink: "http://www.awetstate.com/SYubaS.html",
+    region: "N. Sierra",
+    displayGauge: true,
+  },
+  {
     number: "JNSC1",
     type: "noaa",
     region: "N. Sierra",

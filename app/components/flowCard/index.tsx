@@ -5,6 +5,7 @@ import { CdecCard } from "./cdecCard";
 import { EidCard } from "./eidCard";
 import { RiverInfo } from "@/app/gauges";
 import { AwCard } from "./awCard";
+import { SummitCard } from "./summitCard";
 
 interface IProps {
   name: string;
@@ -21,6 +22,8 @@ export const FlowCard: FC<IProps> = ({ name, gauge, toggleGauge }) => {
     <EidCard key={name} gauge={gauge} toggleGauge={toggleGauge} />
   ) : gauge.type === "aw" ? (
     <AwCard key={name} gauge={gauge} toggleGauge={toggleGauge} />
+  ) : gauge.type === "summit" ? (
+    <SummitCard key={name} gauge={gauge} toggleGauge={toggleGauge} />
   ) : (
     <CdecCard key={name} gauge={gauge} toggleGauge={toggleGauge} />
   );
