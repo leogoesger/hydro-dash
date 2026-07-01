@@ -14,7 +14,7 @@ import { getUniqueFeatures } from "./helpers";
 const putinData = require("./putin.json");
 
 mapboxgl.accessToken =
-  "pk.eyJ1IjoibGVvZ29lc2dlciIsImEiOiJjamU3dDEwZDkwNmJ5MnhwaHM1MjlydG8xIn0.UcVFjCvl3PTPI8jiOnPbYA";
+  "pk.xx.xxx";
 
 const MapPage = () => {
   const mapRef = useRef<Map | null>(null);

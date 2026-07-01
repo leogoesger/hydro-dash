@@ -1,6 +1,6 @@
 "use client";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { RouteBotton } from "./components/routeButton";
+// import { RouteBotton } from "./components/routeButton";
 import CssBaseline from "@mui/material/CssBaseline";
 
 const darkTheme = createTheme({
@@ -20,7 +20,7 @@ export default function ClientLayout({
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <RouteBotton />
+      {/* <RouteBotton /> */}
       {children}
     </ThemeProvider>
   );
