@@ -14,7 +14,7 @@ interface IProps {
 }
 
 export const getGaugeInfo = async (gaugeNumber: string, gaugeSource: string) => {
-  const response = await fetch("https://foodnome.com/api/proxy/aw", {
+  const response = await fetch("https://api.yakkkkk.com/proxy/aw", {
     method: "POST",
     headers: {
       "content-type": "application/json",

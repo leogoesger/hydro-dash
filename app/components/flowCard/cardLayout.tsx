@@ -117,6 +117,9 @@ export const CardLayout: FC<IProps> = ({
             width: 300,
             height: 250,
             xaxis: {
+              // Without data (while loading), Plotly would guess a linear axis
+              // and reject the date tickformatstops below.
+              type: "date",
               hoverformat: "%m/%d %H:%M",
               nticks: 5,
               tickformatstops: [

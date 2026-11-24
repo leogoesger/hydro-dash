@@ -207,7 +207,9 @@ export const defaultGauges: RiverInfo[] = [
     weatherUrl: "https://api.weather.gov/gridpoints/EKA/96,99/forecast"
   },
   {
-    number: "35795422",
+    // Tuolumne below Early Intake + Cherry Creek below Holm PH, the same sum
+    // AW's calculated gauge 35795422 used before it stopped reporting.
+    number: "11276900,11278400",
     name: "Tuolumne - Cherry Creek",
     region: "Central Sierra",
     description: "Length: 7.7 miles.",
@@ -215,10 +217,9 @@ export const defaultGauges: RiverInfo[] = [
     max: 2000,
     awLink:
       "http://www.awetstate.com/TuolumneCC.html",
-    type: "aw",
+    type: "usgs",
     displayGauge: true,
     weatherUrl: "https://api.weather.gov/gridpoints/EKA/96,99/forecast",
-    gaugeSource: "CALCULATED"
   },
   {
     number: "MBT",
@@ -459,15 +460,16 @@ export const fetchLatestReading = async (gauge: RiverInfo) => {
     const filtered = data.value.timeSeries
       .filter(({ variable }) => variable.unit.unitCode === "ft3/s")
 
-    if (filtered.length === 0 || !filtered[0]?.values || filtered[0].values.length === 0) {
+    // Several comma-separated sites report the sum of their flows.
+    const readings = filtered.map((series) => series.values[0]?.value[0]);
+    if (readings.length === 0 || readings.some((d) => !d)) {
       return ":( unknown";
     }
-    const d = filtered[0]?.values[0]?.value[0]
-    const hrsSince = moment.duration(now.diff(d.dateTime)).asHours();
+    const hrsSince = moment.duration(now.diff(readings[0].dateTime)).asHours();
     if (hrsSince > 6) {
       return ":( stale data";
     }
-    return (d?.value + " cfs" || "0 cfs");
+    return readings.reduce((total, d) => total + parseFloat(d.value), 0) + " cfs";
   }
   const response = await fetch(`https://api.water.noaa.gov/nwps/v1/gauges/${gauge.number}/stageflow`)
   const data = await response.json() as NoaaPrediction;

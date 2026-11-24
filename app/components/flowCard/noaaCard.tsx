@@ -54,12 +54,13 @@ export const getGaugeInfo = async (gaugeNumber: string, useGaugeHeight?: boolean
     };
   }
 
-  const lastObservedY = useGaugeHeight
-    ? observedLocal[observedLocal.length - 1].primary
-    : observedLocal[observedLocal.length - 1].secondary;
-  const correctionPerc = useGaugeHeight
-    ? (lastObservedY - validForcast[0].primary) / validForcast[0].primary + 1
-    : (lastObservedY - validForcast[0].secondary) / validForcast[0].secondary + 1;
+  // NOAA sometimes returns no observed data; show the forecast uncorrected then.
+  const lastObserved = observedLocal[observedLocal.length - 1];
+  const correctionPerc = !lastObserved
+    ? 1
+    : useGaugeHeight
+      ? (lastObserved.primary - validForcast[0].primary) / validForcast[0].primary + 1
+      : (lastObserved.secondary - validForcast[0].secondary) / validForcast[0].secondary + 1;
 
   const forecastedX = validForcast.map((item) => item.validTime);
   const forecastedY = validForcast.map(

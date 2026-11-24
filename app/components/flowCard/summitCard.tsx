@@ -16,7 +16,7 @@ interface IProps {
 
 const fetchNoaaProxyData = async (gaugeId: string): Promise<NoaaProxyData[]> => {
   const response = await fetch(
-    `https://foodnome.com/api/proxy/noaa?id=${gaugeId}`
+    `https://api.yakkkkk.com/proxy/noaa?id=${gaugeId}`
   );
   const data: NoaaProxyData[] = await response.json();
   return data;

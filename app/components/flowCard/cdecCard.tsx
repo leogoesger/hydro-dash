@@ -21,7 +21,7 @@ export interface CdecResult {
 }
 
 export const getGaugeInfo = async (gaugeNumber: string) => {
-  const response = await fetch("https://foodnome.com/api/proxy/cdec", {
+  const response = await fetch("https://api.yakkkkk.com/proxy/cdec", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

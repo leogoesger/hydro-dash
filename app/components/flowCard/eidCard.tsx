@@ -19,7 +19,7 @@ export interface EidResult {
 
 export const getGaugeInfo = async (gaugeNumber: string) => {
   const response = await fetch(
-    `https://foodnome.com/api/proxy/eid?projectid=1&id=${gaugeNumber}`,
+    `https://api.yakkkkk.com/proxy/eid?projectid=1&id=${gaugeNumber}`,
     {
       method: "GET",
       headers: {

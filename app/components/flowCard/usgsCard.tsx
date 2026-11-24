@@ -43,23 +43,29 @@ export const getGaugeInfo = async (gaugeNumber: string) => {
   );
   const data: UsgsResponse = await response.json();
 
-  const x: string[] = [];
-  const y: number[] = [];
-
-  data.value.timeSeries
-    .filter(({ variable }) => variable.unit.unitCode === "ft3/s")
-    .forEach((item) => {
-      item.values.forEach((valuesItem) => {
-        valuesItem.value.forEach((valueItem) => {
-          x.push(valueItem.dateTime);
-          y.push(parseFloat(valueItem.value));
-        });
+  // With several comma-separated sites, the flow is their sum at each timestamp
+  // all of them report.
+  const series = data.value.timeSeries.filter(
+    ({ variable }) => variable.unit.unitCode === "ft3/s"
+  );
+  const sums = new Map<string, { total: number; count: number }>();
+  series.forEach((item) => {
+    item.values.forEach((valuesItem) => {
+      valuesItem.value.forEach((valueItem) => {
+        const sum = sums.get(valueItem.dateTime) ?? { total: 0, count: 0 };
+        sum.total += parseFloat(valueItem.value);
+        sum.count += 1;
+        sums.set(valueItem.dateTime, sum);
       });
     });
+  });
+  const complete = Array.from(sums).filter(
+    ([, sum]) => sum.count === series.length
+  );
 
   return {
-    observedX: x,
-    observedY: y,
+    observedX: complete.map(([dateTime]) => dateTime),
+    observedY: complete.map(([, sum]) => sum.total),
   };
 };
 
