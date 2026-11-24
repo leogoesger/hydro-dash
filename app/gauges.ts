@@ -316,7 +316,7 @@ export const defaultGauges: RiverInfo[] = [
     weatherUrl: "https://api.weather.gov/gridpoints/MFR/79,32/forecast",
   },
   {
-    number: "11527000",
+    number: "11530000",
     name: "Trinity - Pigeon Point",
     region: "NorCal",
     description: "Length: 5.5 miles.",
